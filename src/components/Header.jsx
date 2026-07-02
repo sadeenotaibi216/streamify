@@ -7,12 +7,12 @@ function Header() {
         <span className="text-2xl font-semibold font-sans">Streamify</span>
       </div>
 
-      <div className="flex items-center gap-6 text-sm">
-        <button className="text-xl font-semibold hover:text-green-400">Home</button>
-        <button className="text-xl font-semibold hover:text-green-400">TV Shows</button>
-        <button className="text-xl font-semibold hover:text-green-400">Movies</button>
-        <button className="text-xl font-semibold hover:text-green-400">Kids</button>
-        <button className="text-xl font-semibold hover:text-green-400">My List</button>
+      <div className="flex items-center gap-6 text-l">
+        <button className="font-semibold hover:text-green-400">Home</button>
+        <button className="font-semibold hover:text-green-400">TV Shows</button>
+        <button className="font-semibold hover:text-green-400">Movies</button>
+        <button className="font-semibold hover:text-green-400">Kids</button>
+        <button className="font-semibold hover:text-green-400">My List</button>
       </div>
 
       <div className="flex items-center gap-4 text-sm">
