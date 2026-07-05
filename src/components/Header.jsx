@@ -1,3 +1,14 @@
+function Button({ children, className = "", onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`font-semibold cursor-pointer hover:text-green-400 ${className}`}
+    >
+      {children}
+    </button>
+  );
+}
+
 function Header() {
   return (
     <div className="bg-black text-white flex items-center justify-between px-8 py-4">
@@ -8,23 +19,23 @@ function Header() {
       </div>
 
       <div className="flex items-center gap-6 text-l">
-        <button className="font-semibold hover:text-green-400">Home</button>
-        <button className="font-semibold hover:text-green-400">TV Shows</button>
-        <button className="font-semibold hover:text-green-400">Movies</button>
-        <button className="font-semibold hover:text-green-400">Kids</button>
-        <button className="font-semibold hover:text-green-400">My List</button>
+        <Button>Home</Button>
+        <Button>TV Shows</Button>
+        <Button>Movies</Button>
+        <Button>Kids</Button>
+        <Button>My List</Button>
       </div>
 
       <div className="flex items-center gap-4 text-sm">
-        <button className="text-xl font-semibold hover:text-green-400">🔍</button>
+        <Button className="text-xl">🔍</Button>
 
-        <button className="border font-semibold border-gray-600 px-5 py-2 rounded-lg hover:border-white">
+        <Button className="border border-gray-600 px-5 py-2 rounded-lg hover:border-white">
           Sign In
-        </button>
+        </Button>
 
-        <button className="bg-green-400 text-black px-5 py-2 rounded-lg font-semibold hover:bg-green-300">
+        <Button className="bg-green-400 text-black px-5 py-2 rounded-lg hover:bg-green-300 hover:text-black">
           Start Free Trial
-        </button>
+        </Button>
       </div>
 
     </div>
