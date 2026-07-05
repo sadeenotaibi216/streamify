@@ -30,7 +30,7 @@ function Hero() {
         </div>
       </div>
 
-      <div className="w-1/2 max-w-[60%] aspect-video flex items-center justify-end pt-5 pb-5">
+      <div className="w-1/2 max-w-[80%] aspect-video flex items-center justify-end pt-5 pb-5 text-red">
         <img
           src="/hero.png"
           alt="hero logo"
