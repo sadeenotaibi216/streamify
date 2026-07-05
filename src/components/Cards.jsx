@@ -27,14 +27,14 @@ function Card({ title, price, features, buttonText, popular }) {
       </ul>
 
       <button
-        className={`mt-auto rounded py-1 w-full ${
-          popular
-            ? "bg-green-400 text-black"
-            : "border border-green-400 text-white"
-        }`}
-      >
-        {buttonText}
-      </button>
+  className={`mt-auto rounded py-2 w-full font-semibold transition ${
+    popular
+      ? "bg-green-400 text-black hover:bg-green-300"
+      : "border border-green-400 text-white hover:bg-green-400 hover:text-black"
+  }`}
+>
+  {buttonText}
+</button>
     </div>
   );
 }
