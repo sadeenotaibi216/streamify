@@ -2,7 +2,7 @@ function Card({ title, price, features, buttonText, popular }) {
   return (
     <div
       className={`relative flex flex-col bg-[#0B1220] text-white rounded-2xl p-6 w-72 border ${
-        title === "Standard"? "border-green-400" : "border-gray-700"
+        title === "Standard" ? "border-green-400" : "border-gray-700"
       }`}
     >
       {popular && (
@@ -27,15 +27,14 @@ function Card({ title, price, features, buttonText, popular }) {
       </ul>
 
       <button
-  className={`mt-auto rounded py-2 w-full font-semibold transition ${
-    popular
-      ? "bg-green-400 text-black hover:bg-green-300"
-      : "border border-green-400 text-white hover:bg-green-400 hover:text-black"
-  }`}
->
-  {buttonText}
-
-</button>
+        className={`mt-auto rounded py-2 w-full font-semibold transition ${
+          popular
+            ? "bg-green-400 text-black hover:bg-green-300"
+            : "border border-green-400 text-white hover:bg-green-400 hover:text-black"
+        }`}
+      >
+        {buttonText}
+      </button>
     </div>
   );
 }
@@ -47,11 +46,7 @@ function Cards() {
         <Card
           title="Basic"
           price="5.99"
-          features={[
-            "Watch on 1 device",
-            "HD quality",
-            "Download on 1 device",
-          ]}
+          features={["Watch on 1 device", "HD quality", "Download on 1 device"]}
           buttonText="Choose Basic"
           popular={false}
         />

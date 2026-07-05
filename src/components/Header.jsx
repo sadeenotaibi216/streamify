@@ -19,7 +19,8 @@ function Header() {
     },
     {
       text: "Sign In",
-      className: "border border-gray-600 px-5 py-2 rounded-lg hover:border-white",
+      className:
+        "border border-gray-600 px-5 py-2 rounded-lg hover:border-white",
     },
     {
       text: "Start Free Trial",
