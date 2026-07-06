@@ -1,18 +1,45 @@
-function FAQItem({ question }) {
+import { useState } from "react";
+import Button from "./Buttons";
+
+function FAQItem({ question, answer }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <div className="bg-[#0B1220] text-white rounded-xl px-6 py-4 flex justify-between items-center">
-      <p className="text-lg font-semibold">{question}</p>
-      <span className="text-3xl">+</span>
+    <div className="bg-[#0B1220] text-white rounded-xl px-6 py-4">
+      <div className="flex justify-between items-center">
+        <p className="text-lg font-semibold">{question}</p>
+
+        <Button onClick={() => setOpen(!open)} className="text-3xl px-2 py-0">
+          {open ? "-" : "+"}
+        </Button>
+      </div>
+
+      {open && <p className="mt-3 text-gray-400">{answer}</p>}
     </div>
   );
 }
 
 function FAQ() {
   const questions = [
-    "What devices can I use to watch Streamify?",
-    "Can I cancel my subscription anytime?",
-    "Is there a free trial?",
-    "How many devices can I watch on?",
+    {
+      question: "What devices can I use to watch Streamify?",
+      answer:
+        "You can watch Streamify on your phone, laptop, tablet, and smart TV.",
+    },
+    {
+      question: "Can I cancel my subscription anytime?",
+      answer:
+        "Yes, you can cancel your subscription anytime with no extra fees.",
+    },
+    {
+      question: "Is there a free trial?",
+      answer: "Yes, Streamify offers a free trial for new users.",
+    },
+    {
+      question: "How many devices can I watch on?",
+      answer:
+        "It depends on your plan. Basic allows 1 device, Standard allows 2, and Premium allows 4.",
+    },
   ];
 
   return (
@@ -22,8 +49,8 @@ function FAQ() {
       </h1>
 
       <div className="space-y-3">
-        {questions.map((question, index) => (
-          <FAQItem key={index} question={question} />
+        {questions.map((item, index) => (
+          <FAQItem key={index} question={item.question} answer={item.answer} />
         ))}
       </div>
     </div>

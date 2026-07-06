@@ -1,13 +1,4 @@
-function Button({ children, className = "", onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`font-semibold cursor-pointer hover:text-green-400 ${className}`}
-    >
-      {children}
-    </button>
-  );
-}
+import Button from "./Buttons";
 
 function Header() {
   const navButtons = ["Home", "TV Shows", "Movies", "Kids", "My List"];
@@ -35,10 +26,15 @@ function Header() {
         <img src="/logo.png" alt="Streamify-logo" className="w-10 h-10" />
         <span className="text-2xl font-semibold font-sans">Streamify</span>
       </div>
-
       <div className="flex items-center gap-6 text-lg">
         {navButtons.map((button) => (
-          <Button key={button}>{button}</Button>
+          <Button
+            key={button}
+
+            className="hover:text-green-400"
+          >
+            {button}
+          </Button>
         ))}
       </div>
 

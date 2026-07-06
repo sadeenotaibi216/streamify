@@ -1,3 +1,4 @@
+import Button from "./Buttons";
 function Hero() {
   return (
     <div className="min-h-[55vh] bg-black text-white flex items-center justify-between px-16">
@@ -13,13 +14,13 @@ function Hero() {
         </p>
 
         <div className="flex items-center text-white gap-4 pt-5 pb-5">
-          <button className="bg-green-400 text-black px-8 py-4 text-lg rounded-lg font-semibold hover:bg-green-300">
+          <Button className="bg-green-400 text-black px-8 py-4 text-lg rounded-lg font-semibold hover:bg-green-300">
             Start Free Trial
-          </button>
+          </Button>
 
-          <button className="bg-green-400 text-black px-8 py-4 text-lg rounded-lg font-semibold hover:bg-green-300">
+          <Button className="bg-green-400 text-black px-8 py-4 text-lg rounded-lg font-semibold hover:bg-green-300">
             Watch Trailer
-          </button>
+          </Button>
         </div>
 
         <div className="flex items-center gap-2 pt-5 pb-5">
