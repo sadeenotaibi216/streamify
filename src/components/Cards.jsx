@@ -8,11 +8,11 @@ function Card({
   buttonText,
   popularm,
   populary,
-  urplan,
+  userPlan,
 }) {
-  const price = urplan === "monthly" ? monthlyPrice : yearlyPrice;
+  const price = userPlan === "monthly" ? monthlyPrice : yearlyPrice;
 
-  const popular = urplan === "monthly" ? popularm : populary;
+  const popular = userPlan === "monthly" ? popularm : populary;
 
   return (
     <div className="relative flex flex-col bg-[#0B1220] text-white rounded-2xl p-6 w-72 border">
@@ -27,7 +27,7 @@ function Card({
       <p className="text-4xl mt-2">
         ${price}
         <span className="text-sm font-normal text-gray-400 px-1 py-1">
-          / {urplan === "monthly" ? "month" : "year"}
+          / {userPlan === "monthly" ? "month" : "year"}
         </span>
       </p>
 
@@ -50,7 +50,7 @@ function Card({
   );
 }
 
-function Cards({ urplan }) {
+function Cards({ userPlan }) {
   return (
     <>
       <div className="flex gap-6 justify-center mt-10">
@@ -58,7 +58,7 @@ function Cards({ urplan }) {
           title="Basic"
           monthlyPrice="5.99"
           yearlyPrice="50"
-          urplan={urplan}
+          userPlan={userPlan}
           features={["Watch on 1 device", "HD quality", "Download on 1 device"]}
           buttonText="Choose Basic"
           popularm={false}
@@ -69,7 +69,7 @@ function Cards({ urplan }) {
           title="Standard"
           monthlyPrice="9.99"
           yearlyPrice="70"
-          urplan={urplan}
+          userPlan={userPlan}
           features={[
             "Watch on 2 devices",
             "Full HD quality",
@@ -85,7 +85,7 @@ function Cards({ urplan }) {
           title="Premium"
           monthlyPrice="13.99"
           yearlyPrice="90"
-          urplan={urplan}
+          userPlan={userPlan}
           features={[
             "Watch on 4 devices",
             "4K Ultra HD quality",

@@ -3,7 +3,7 @@ import Cards from "./Cards";
 import Button from "./Buttons";
 
 function Plan() {
-  const [urplan, setPlan] = useState("monthly");
+  const [userPlan, setUserPlan] = useState("monthly");
 
   return (
     <>
@@ -13,18 +13,18 @@ function Plan() {
 
       <div className="relative flex justify-center items-center rounded-full border border-gray-700 bg-[#0B1220] w-[360px] h-14 mx-auto p-1">
         <Button
-          onClick={() => setPlan("monthly")}
+          onClick={() => setUserPlan("monthly")}
           className={`w-1/2 h-full rounded-full text-lg font-sans font-semibold ${
-            urplan === "monthly" ? "bg-green-400 text-black" : "text-white"
+            userPlan === "monthly" ? "bg-green-400 text-black" : "text-white"
           }`}
         >
           Monthly
         </Button>
 
         <Button
-          onClick={() => setPlan("yearly")}
+          onClick={() => setUserPlan("yearly")}
           className={`w-1/2 h-full rounded-full text-lg font-sans font-semibold ${
-            urplan === "yearly" ? "bg-green-400 text-black" : "text-white"
+            userPlan === "yearly" ? "bg-green-400 text-black" : "text-white"
           }`}
         >
           Yearly
@@ -35,7 +35,7 @@ function Plan() {
         </Button>
       </div>
 
-      <Cards urplan={urplan} />
+      <Cards userPlan={userPlan} />
     </>
   );
 }
