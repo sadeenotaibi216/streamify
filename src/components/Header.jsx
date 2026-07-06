@@ -31,7 +31,7 @@ function Header() {
       {navButtons.map((button) => (
         <Button
           key={button}
-        
+  
           className="hover:text-green-400"
         >
           {button}
