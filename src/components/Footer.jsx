@@ -1,4 +1,10 @@
-
+function FooterLink({ children }) {
+  return (
+    <p className="text-gray-400 mb-2">
+      {children}
+    </p>
+  );
+}
 
 function Footer() {
   return (
@@ -21,33 +27,31 @@ function Footer() {
             <br />
             Stream anytime, anywhere.
           </p>
-
-        
         </div>
 
         <div className="flex gap-20 mr-30">
           <div>
             <p className="font-semibold text-xl mb-4">Browse</p>
-            <p className="text-gray-400 mb-2">TV Shows</p>
-            <p className="text-gray-400 mb-2">Movies</p>
-            <p className="text-gray-400 mb-2">Kids</p>
-            <p className="text-gray-400 mb-2">My List</p>
+            <FooterLink>TV Shows</FooterLink>
+            <FooterLink>Movies</FooterLink>
+            <FooterLink>Kids</FooterLink>
+            <FooterLink>My List</FooterLink>
           </div>
 
           <div>
             <p className="font-semibold text-xl mb-4">Company</p>
-            <p className="text-gray-400 mb-2">About Us</p>
-            <p className="text-gray-400 mb-2">Careers</p>
-            <p className="text-gray-400 mb-2">Press</p>
-            <p className="text-gray-400 mb-2">Contact Us</p>
+            <FooterLink>About Us</FooterLink>
+            <FooterLink>Careers</FooterLink>
+            <FooterLink>Press</FooterLink>
+            <FooterLink>Contact Us</FooterLink>
           </div>
 
           <div>
             <p className="font-semibold text-xl mb-4">Support</p>
-            <p className="text-gray-400 mb-2">Help Center</p>
-            <p className="text-gray-400 mb-2">Terms of Use</p>
-            <p className="text-gray-400 mb-2">Privacy Policy</p>
-            <p className="text-gray-400 mb-2">Cookie Policy</p>
+            <FooterLink>Help Center</FooterLink>
+            <FooterLink>Terms of Use</FooterLink>
+            <FooterLink>Privacy Policy</FooterLink>
+            <FooterLink>Cookie Policy</FooterLink>
           </div>
         </div>
       </div>
