@@ -1,14 +1,18 @@
 import Button from "./Buttons";
+
 function Card({
   title,
   monthlyPrice,
   yearlyPrice,
   features,
   buttonText,
-  popular,
+  popularm,
+  populary,
   urplan,
 }) {
   const price = urplan === "monthly" ? monthlyPrice : yearlyPrice;
+
+  const popular = urplan === "monthly" ? popularm : populary;
 
   return (
     <div className="relative flex flex-col bg-[#0B1220] text-white rounded-2xl p-6 w-72 border">
@@ -57,7 +61,8 @@ function Cards({ urplan }) {
           urplan={urplan}
           features={["Watch on 1 device", "HD quality", "Download on 1 device"]}
           buttonText="Choose Basic"
-          popular={false}
+          popularm={false}
+          populary={true}
         />
 
         <Card
@@ -72,7 +77,8 @@ function Cards({ urplan }) {
             "Ad-free experience",
           ]}
           buttonText="Choose Standard"
-          popular={true}
+          popularm={true}
+          populary={false}
         />
 
         <Card
@@ -86,7 +92,8 @@ function Cards({ urplan }) {
             "Download on 4 devices",
           ]}
           buttonText="Choose Premium"
-          popular={false}
+          popularm={false}
+          populary={false}
         />
       </div>
 
