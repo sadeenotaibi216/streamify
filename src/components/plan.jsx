@@ -15,9 +15,7 @@ function Plan() {
         <Button
           onClick={() => setPlan("monthly")}
           className={`w-1/2 h-full rounded-full text-lg font-sans font-semibold ${
-            urplan === "monthly"
-              ? "bg-green-400 text-black"
-              : "text-white"
+            urplan === "monthly" ? "bg-green-400 text-black" : "text-white"
           }`}
         >
           Monthly
@@ -26,9 +24,7 @@ function Plan() {
         <Button
           onClick={() => setPlan("yearly")}
           className={`w-1/2 h-full rounded-full text-lg font-sans font-semibold ${
-            urplan === "yearly"
-              ? "bg-green-400 text-black"
-              : "text-white"
+            urplan === "yearly" ? "bg-green-400 text-black" : "text-white"
           }`}
         >
           Yearly

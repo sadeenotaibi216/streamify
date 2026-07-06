@@ -9,19 +9,12 @@ function FAQItem({ question, answer }) {
       <div className="flex justify-between items-center">
         <p className="text-lg font-semibold">{question}</p>
 
-        <Button
-          onClick={() => setOpen(!open)}
-          className="text-3xl px-2 py-0"
-        >
+        <Button onClick={() => setOpen(!open)} className="text-3xl px-2 py-0">
           {open ? "-" : "+"}
         </Button>
       </div>
 
-      {open && (
-        <p className="mt-3 text-gray-400">
-          {answer}
-        </p>
-      )}
+      {open && <p className="mt-3 text-gray-400">{answer}</p>}
     </div>
   );
 }
@@ -30,11 +23,13 @@ function FAQ() {
   const questions = [
     {
       question: "What devices can I use to watch Streamify?",
-      answer: "You can watch Streamify on your phone, laptop, tablet, and smart TV.",
+      answer:
+        "You can watch Streamify on your phone, laptop, tablet, and smart TV.",
     },
     {
       question: "Can I cancel my subscription anytime?",
-      answer: "Yes, you can cancel your subscription anytime with no extra fees.",
+      answer:
+        "Yes, you can cancel your subscription anytime with no extra fees.",
     },
     {
       question: "Is there a free trial?",
@@ -42,7 +37,8 @@ function FAQ() {
     },
     {
       question: "How many devices can I watch on?",
-      answer: "It depends on your plan. Basic allows 1 device, Standard allows 2, and Premium allows 4.",
+      answer:
+        "It depends on your plan. Basic allows 1 device, Standard allows 2, and Premium allows 4.",
     },
   ];
 
@@ -54,11 +50,7 @@ function FAQ() {
 
       <div className="space-y-3">
         {questions.map((item, index) => (
-          <FAQItem
-            key={index}
-            question={item.question}
-            answer={item.answer}
-          />
+          <FAQItem key={index} question={item.question} answer={item.answer} />
         ))}
       </div>
     </div>

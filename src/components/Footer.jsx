@@ -1,9 +1,5 @@
 function FooterLink({ children }) {
-  return (
-    <p className="text-gray-400 mb-2">
-      {children}
-    </p>
-  );
+  return <p className="text-gray-400 mb-2">{children}</p>;
 }
 
 function Footer() {
@@ -12,14 +8,8 @@ function Footer() {
       <div className="flex justify-between ml-30 text-white mt-5">
         <div>
           <div className="flex items-center gap-2">
-            <img
-              src="/logo.png"
-              alt="Streamify-logo"
-              className="w-10 h-10"
-            />
-            <span className="text-2xl font-semibold font-sans">
-              Streamify
-            </span>
+            <img src="/logo.png" alt="Streamify-logo" className="w-10 h-10" />
+            <span className="text-2xl font-semibold font-sans">Streamify</span>
           </div>
 
           <p className="text-xl font-sans text-gray-400 mt-3">
