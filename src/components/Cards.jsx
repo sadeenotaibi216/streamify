@@ -1,12 +1,19 @@
-function Card({ title, price, features, buttonText, popular }) {
+import Button from "./Buttons";
+function Card({
+  title,
+  monthlyPrice,
+  yearlyPrice,
+  features,
+  buttonText,
+  popular,
+  urplan,
+}) {
+  const price = urplan === "monthly" ? monthlyPrice : yearlyPrice;
+
   return (
-    <div
-      className={`relative flex flex-col bg-[#0B1220] text-white rounded-2xl p-6 w-72 border ${
-        title === "Standard" ? "border-green-400" : "border-gray-700"
-      }`}
-    >
+    <div className="relative flex flex-col bg-[#0B1220] text-white rounded-2xl p-6 w-72 border">
       {popular && (
-        <p className="absolute top-0 left-0 w-full bg-green-400 text-black text-center rounded-t-2xl py-1 text-sm font-bold">
+        <p className="border-green-400 absolute top-0 left-0 w-full bg-green-400 text-black text-center rounded-t-2xl py-1 text-sm font-bold">
           Most-Popular
         </p>
       )}
@@ -16,7 +23,7 @@ function Card({ title, price, features, buttonText, popular }) {
       <p className="text-4xl mt-2">
         ${price}
         <span className="text-sm font-normal text-gray-400 px-1 py-1">
-          / month
+          / {urplan === "monthly" ? "month" : "year"}
         </span>
       </p>
 
@@ -26,7 +33,7 @@ function Card({ title, price, features, buttonText, popular }) {
         ))}
       </ul>
 
-      <button
+      <Button
         className={`mt-auto rounded py-2 w-full font-semibold transition ${
           popular
             ? "bg-green-400 text-black hover:bg-green-300"
@@ -34,18 +41,20 @@ function Card({ title, price, features, buttonText, popular }) {
         }`}
       >
         {buttonText}
-      </button>
+      </Button>
     </div>
   );
 }
 
-function Cards() {
+function Cards({ urplan }) {
   return (
     <>
       <div className="flex gap-6 justify-center mt-10">
         <Card
           title="Basic"
-          price="5.99"
+          monthlyPrice="5.99"
+          yearlyPrice="50"
+          urplan={urplan}
           features={["Watch on 1 device", "HD quality", "Download on 1 device"]}
           buttonText="Choose Basic"
           popular={false}
@@ -53,7 +62,9 @@ function Cards() {
 
         <Card
           title="Standard"
-          price="9.99"
+          monthlyPrice="9.99"
+          yearlyPrice="70"
+          urplan={urplan}
           features={[
             "Watch on 2 devices",
             "Full HD quality",
@@ -66,7 +77,9 @@ function Cards() {
 
         <Card
           title="Premium"
-          price="13.99"
+          monthlyPrice="13.99"
+          yearlyPrice="90"
+          urplan={urplan}
           features={[
             "Watch on 4 devices",
             "4K Ultra HD quality",

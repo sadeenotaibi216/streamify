@@ -22,11 +22,7 @@ function Footer() {
             Stream anytime, anywhere.
           </p>
 
-          <img
-            src="/all.png"
-            alt="apps-logo"
-            className="w-50 h-20"
-          />
+        
         </div>
 
         <div className="flex gap-20 mr-30">

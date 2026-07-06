@@ -1,4 +1,4 @@
-
+import Button from "./Buttons";
 function email() {
   return (
     <div className="max-w-6xl mx-auto mt-10 bg-gradient-to-r from-[#0B1220] to-green-950 rounded-2xl p-6 flex justify-between items-center">
@@ -24,9 +24,9 @@ function email() {
           className="bg-[#0B1220] border border-gray-700 text-white px-5 py-3 rounded-l-lg w-80 outline-none"
         />
 
-        <button className="bg-green-400 text-black px-8 py-3 rounded-r-lg font-semibold">
+        <Button className="bg-green-400 text-black px-8 py-3 rounded-r-lg font-semibold">
           Subscribe
-        </button>
+        </Button>
       </div>
 
     </div>

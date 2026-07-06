@@ -1,13 +1,5 @@
-function Button({ children, className = "", onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`font-semibold cursor-pointer hover:text-green-400 ${className}`}
-    >
-      {children}
-    </button>
-  );
-}
+import Button from "./Buttons";
+
 
 function Header() {
   const navButtons = ["Home", "TV Shows", "Movies", "Kids", "My List"];

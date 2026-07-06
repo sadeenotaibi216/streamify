@@ -1,3 +1,4 @@
+
 function FeatureItem({ imgSrc, imgAlt, title, description }) {
   return (
     <div className="flex items-center gap-3 flex-1 max-w-[260px]">
