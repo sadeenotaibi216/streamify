@@ -11,34 +11,31 @@ function Header() {
     {
       text: "Sign In",
       className:
-        "border border-gray-600 px-5 py-2 rounded-lg hover:border-white",
+        "border border-gray-600 px-4 py-2 rounded-lg hover:border-white",
     },
     {
       text: "Start Free Trial",
       className:
-        "bg-green-400 text-black px-5 py-2 rounded-lg hover:bg-green-300 hover:text-black",
+        "bg-green-400 text-black px-4 py-2 rounded-lg hover:bg-green-300 hover:text-black",
     },
   ];
 
   return (
-    <div className="bg-black text-white flex items-center justify-between px-8 py-4">
+    <div className="bg-black text-white flex flex-col md:flex-row items-center justify-between px-4 md:px-8 py-4 gap-4">
       <div className="flex items-center gap-2">
         <img src="/logo.png" alt="Streamify-logo" className="w-10 h-10" />
         <span className="text-2xl font-semibold font-sans">Streamify</span>
       </div>
-      <div className="flex items-center gap-6 text-lg">
-        {navButtons.map((button) => (
-          <Button
-            key={button}
 
-            className="hover:text-green-400"
-          >
+      <div className="flex flex-wrap justify-center items-center gap-3 md:gap-6 text-sm md:text-lg">
+        {navButtons.map((button) => (
+          <Button key={button} className="hover:text-green-400">
             {button}
           </Button>
         ))}
       </div>
 
-      <div className="flex items-center gap-4 text-sm">
+      <div className="flex flex-wrap justify-center items-center gap-3 md:gap-4 text-sm">
         {actionButtons.map((button) => (
           <Button key={button.text} className={button.className}>
             {button.text}
