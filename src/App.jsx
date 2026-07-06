@@ -1,10 +1,10 @@
 import "./App.css";
 
 import Header from "./components/Header";
-import Faq from "./components/faq";
+import Faq from "./components/Faq";
 import Hero from "./components/Hero";
-import Middlepart from "./components/middlepart";
-import Plan from "./components/plan";
+import Middlepart from "./components/MiddlePart";
+import Plan from "./components/Plan";
 import Footer from "./components/Footer";
 function App() {
   return (
