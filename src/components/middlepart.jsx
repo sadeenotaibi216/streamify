@@ -1,11 +1,20 @@
 function FeatureItem({ imgSrc, imgAlt, title, description }) {
   return (
-    <div className="flex items-center gap-3 flex-1 max-w-[260px]">
-      <img src={imgSrc} alt={imgAlt} className="w-20 h-20" />
+    <div className="flex items-center gap-3 w-full sm:w-[45%] lg:w-[22%]">
+      <img
+        src={imgSrc}
+        alt={imgAlt}
+        className="w-14 h-14 md:w-20 md:h-20"
+      />
 
-      <div className="max-w-[170px]">
-        <p className="text-white text-xl font-semibold">{title}</p>
-        <p className="text-gray-600 text-l">{description}</p>
+      <div>
+        <p className="text-white text-base md:text-xl font-semibold">
+          {title}
+        </p>
+
+        <p className="text-gray-400 text-sm md:text-base">
+          {description}
+        </p>
       </div>
     </div>
   );
@@ -14,11 +23,11 @@ function FeatureItem({ imgSrc, imgAlt, title, description }) {
 function MiddlePart() {
   return (
     <div className="text-white py-10 bg-[#020710]">
-      <h1 className="text-white text-4xl font-bold text-center mb-8">
+      <h1 className="text-white text-3xl md:text-4xl font-bold text-center mb-8">
         Why Streamify?
       </h1>
 
-      <div className="flex items-center justify-between gap-8 px-16">
+      <div className="flex flex-wrap justify-center lg:justify-between gap-6 px-6 md:px-16">
         <FeatureItem
           imgSrc="/6.png"
           imgAlt="Thousands of titles"

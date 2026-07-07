@@ -1,27 +1,29 @@
 function FooterLink({ children }) {
-  return <p className="text-gray-400 mb-2">{children}</p>;
+  return <p className="text-gray-400 mb-2 text-sm md:text-base">{children}</p>;
 }
 
 function Footer() {
   return (
-    <>
-      <div className="flex justify-between ml-30 text-white mt-5">
+    <div className="text-white mt-5 px-6 md:px-16 py-8">
+      <div className="flex flex-col md:flex-row justify-between gap-10">
         <div>
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="Streamify-logo" className="w-10 h-10" />
             <span className="text-2xl font-semibold font-sans">Streamify</span>
           </div>
 
-          <p className="text-xl font-sans text-gray-400 mt-3">
+          <p className="text-base md:text-xl font-sans text-gray-400 mt-3">
             Your favorite stories, all in one place.
             <br />
             Stream anytime, anywhere.
           </p>
         </div>
 
-        <div className="flex gap-20 mr-30">
+        <div className="flex flex-wrap gap-10 md:gap-20">
           <div>
-            <p className="font-semibold text-xl mb-4">Browse</p>
+            <p className="font-semibold text-lg md:text-xl mb-2 md:mb-4">
+              Browse
+            </p>
             <FooterLink>TV Shows</FooterLink>
             <FooterLink>Movies</FooterLink>
             <FooterLink>Kids</FooterLink>
@@ -29,7 +31,9 @@ function Footer() {
           </div>
 
           <div>
-            <p className="font-semibold text-xl mb-4">Company</p>
+            <p className="font-semibold text-lg md:text-xl mb-2 md:mb-4">
+              Company
+            </p>
             <FooterLink>About Us</FooterLink>
             <FooterLink>Careers</FooterLink>
             <FooterLink>Press</FooterLink>
@@ -37,7 +41,9 @@ function Footer() {
           </div>
 
           <div>
-            <p className="font-semibold text-xl mb-4">Support</p>
+            <p className="font-semibold text-lg md:text-xl mb-2 md:mb-4">
+              Support
+            </p>
             <FooterLink>Help Center</FooterLink>
             <FooterLink>Terms of Use</FooterLink>
             <FooterLink>Privacy Policy</FooterLink>
@@ -45,7 +51,7 @@ function Footer() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

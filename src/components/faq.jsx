@@ -5,16 +5,23 @@ function FAQItem({ question, answer }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="bg-[#0B1220] text-white rounded-xl px-6 py-4">
-      <div className="flex justify-between items-center">
-        <p className="text-lg font-semibold">{question}</p>
+    <div className="bg-[#0B1220] text-white rounded-xl px-4 md:px-6 py-4">
+      <div className="flex justify-between items-center gap-4">
+        <p className="text-sm md:text-lg font-semibold">{question}</p>
 
-        <Button onClick={() => setOpen(!open)} className="text-3xl px-2 py-0">
+        <Button
+          onClick={() => setOpen(!open)}
+          className="text-2xl md:text-3xl px-2 py-0 flex-shrink-0"
+        >
           {open ? "-" : "+"}
         </Button>
       </div>
 
-      {open && <p className="mt-3 text-gray-400">{answer}</p>}
+      {open && (
+        <p className="mt-3 text-gray-400 text-sm md:text-base">
+          {answer}
+        </p>
+      )}
     </div>
   );
 }
@@ -43,8 +50,8 @@ function FAQ() {
   ];
 
   return (
-    <div className="mt-10 w-5xl mx-auto">
-      <h1 className="text-white text-4xl font-bold text-center mb-6">
+    <div className="mt-5 md:mt-10 w-full max-w-3xl md:max-w-5xl mx-auto px-4">
+      <h1 className="text-white text-2xl md:text-4xl font-bold text-center mb-3 md:mb-6">
         Frequently Asked Questions
       </h1>
 
