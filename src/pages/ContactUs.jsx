@@ -5,14 +5,44 @@ function ContactUs() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
 
-  
+    if (name.trim() === "") {
+      setError("Name is required");
+      setSuccess("");
+      return;
+    }
+    if (!/^[A-Za-z\s]+$/.test(name)) {
+  setError("Name should contain letters only");
+  setSuccess("");
+  return;
+}
 
+    if (email.trim() === "") {
+      setError("Email is required");
+      setSuccess("");
+      return;
+    }
+
+    if (!email.includes("@")) {
+      setError("Please enter a valid email");
+      setSuccess("");
+      return;
+    }
+
+    if (message.trim() === "") {
+      setError("Message is required");
+      setSuccess("");
+      return;
+    }
+
+    setError("");
     setSuccess("Message sent successfully!");
 
+  alert(`${message}`);
     setName("");
     setEmail("");
     setMessage("");
@@ -32,6 +62,7 @@ function ContactUs() {
             type="text"
             placeholder="Your name"
             value={name}
+             maxLength={20}
             onChange={(e) => setName(e.target.value)}
             className="bg-black border border-gray-600 rounded-lg px-4 py-3 outline-none focus:border-green-400"
           />
@@ -57,6 +88,10 @@ function ContactUs() {
           >
             Send
           </button>
+
+          {error && (
+            <p className="text-red-400 text-center font-semibold">{error}</p>
+          )}
 
           {success && (
             <p className="text-green-400 text-center font-semibold">
