@@ -1,7 +1,14 @@
+import { NavLink } from "react-router";
 import Button from "./Buttons";
 
 function Header() {
-  const navButtons = ["Home", "TV Shows", "Movies", "Kids", "My List"];
+  const navButtons = [
+    { text: "Home", path: "/" },
+    { text: "TV Shows", path: "/tv-shows" },
+    { text: "Movies", path: "/movies" },
+    { text: "Kids", path: "/kids" },
+    { text: "My List", path: "/my-list" },
+  ];
 
   const actionButtons = [
     {
@@ -29,9 +36,18 @@ function Header() {
 
       <div className="flex flex-wrap justify-center items-center gap-3 md:gap-6 text-sm md:text-lg">
         {navButtons.map((button) => (
-          <Button key={button} className="hover:text-green-400">
-            {button}
-          </Button>
+          <NavLink
+            key={button.text}
+            to={button.path}
+            end={button.path === "/"}
+            className={({ isActive }) =>
+              isActive
+                ? "text-green-400 font-semibold"
+                : "text-white hover:text-green-400"
+            }
+          >
+            {button.text}
+          </NavLink>
         ))}
       </div>
 

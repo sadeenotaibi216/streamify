@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "./Buttons";
 
+
 function FAQItem({ question, answer }) {
   const [open, setOpen] = useState(false);
 
