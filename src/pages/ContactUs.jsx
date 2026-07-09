@@ -16,10 +16,10 @@ function ContactUs() {
       return;
     }
     if (!/^[A-Za-z\s]+$/.test(name)) {
-  setError("Name should contain letters only");
-  setSuccess("");
-  return;
-}
+      setError("Name should contain letters only");
+      setSuccess("");
+      return;
+    }
 
     if (email.trim() === "") {
       setError("Email is required");
@@ -42,7 +42,7 @@ function ContactUs() {
     setError("");
     setSuccess("Message sent successfully!");
 
-  alert(`${message}`);
+    alert(`${message}`);
     setName("");
     setEmail("");
     setMessage("");
@@ -62,7 +62,7 @@ function ContactUs() {
             type="text"
             placeholder="Your name"
             value={name}
-             maxLength={20}
+            maxLength={20}
             onChange={(e) => setName(e.target.value)}
             className="bg-black border border-gray-600 rounded-lg px-4 py-3 outline-none focus:border-green-400"
           />

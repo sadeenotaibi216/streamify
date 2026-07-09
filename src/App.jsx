@@ -25,7 +25,7 @@ function App() {
         <Route path="/movies" element={<TestPage title="Movies Page" />} />
         <Route path="/kids" element={<TestPage title="Kids Page" />} />
         <Route path="/my-list" element={<TestPage title="My List Page" />} />
-               <Route path="/contact" element={<ContactUs />} />
+        <Route path="/contact" element={<ContactUs />} />
       </Routes>
 
       <Footer />

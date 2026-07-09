@@ -1,20 +1,12 @@
 function FeatureItem({ imgSrc, imgAlt, title, description }) {
   return (
     <div className="flex items-center gap-3 w-full sm:w-[45%] lg:w-[22%]">
-      <img
-        src={imgSrc}
-        alt={imgAlt}
-        className="w-14 h-14 md:w-20 md:h-20"
-      />
+      <img src={imgSrc} alt={imgAlt} className="w-14 h-14 md:w-20 md:h-20" />
 
       <div>
-        <p className="text-white text-base md:text-xl font-semibold">
-          {title}
-        </p>
+        <p className="text-white text-base md:text-xl font-semibold">{title}</p>
 
-        <p className="text-gray-400 text-sm md:text-base">
-          {description}
-        </p>
+        <p className="text-gray-400 text-sm md:text-base">{description}</p>
       </div>
     </div>
   );

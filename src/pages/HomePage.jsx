@@ -7,7 +7,7 @@ function HomePage() {
   return (
     <>
       <Hero />
-      
+
       <MiddlePart />
 
       <Plan />

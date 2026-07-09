@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Button from "./Buttons";
 
-
 function FAQItem({ question, answer }) {
   const [open, setOpen] = useState(false);
 
@@ -19,9 +18,7 @@ function FAQItem({ question, answer }) {
       </div>
 
       {open && (
-        <p className="mt-3 text-gray-400 text-sm md:text-base">
-          {answer}
-        </p>
+        <p className="mt-3 text-gray-400 text-sm md:text-base">{answer}</p>
       )}
     </div>
   );

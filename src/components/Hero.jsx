@@ -10,7 +10,8 @@ function Hero() {
         </h1>
 
         <p className="text-sm md:text-xl font-sans text-white pt-2 pb-2">
-          Stream thousands of movies, TV shows and <br className="hidden md:block" />
+          Stream thousands of movies, TV shows and{" "}
+          <br className="hidden md:block" />
           exclusive originals in HD and 4K.
         </p>
 
