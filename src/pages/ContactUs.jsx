@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import * as yup from "yup";
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 
 const contactSchema = yup.object({
   name: yup
@@ -14,7 +14,7 @@ const contactSchema = yup.object({
   email: yup
     .string()
     .required("Email is required")
-    .matches(emailRegex, "Please enter a valid email"),
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please enter a valid email"),
 
   subject: yup.string().required("Please select a subject"),
 
@@ -23,9 +23,13 @@ const contactSchema = yup.object({
     .required("Message is required")
     .max(40, "Message must be 40 characters or less"),
 
-  genres: yup.array().min(1, "Please choose at least one genre"),
+  genres: yup
+    .array()
+    .min(1, "Please choose at least one genre"),
 
-  acceptTerms: yup.boolean().oneOf([true], "You must accept the terms"),
+  acceptTerms: yup
+    .boolean()
+    .oneOf([true], "You must accept the terms"),
 });
 
 function ContactUs() {
@@ -73,6 +77,7 @@ function ContactUs() {
     };
   }
 
+  // Validates the entire form when Send is clicked
   function validateForm(data) {
     try {
       contactSchema.validateSync(getFormData(data), {
@@ -84,12 +89,37 @@ function ContactUs() {
     } catch (error) {
       const newErrors = {};
 
-      error.inner.forEach((err) => {
-        newErrors[err.path] = err.message;
+      error.inner.forEach((currentError) => {
+        // Keep the first error for each field.
+        // This makes "required" appear before other errors.
+        if (!newErrors[currentError.path]) {
+          newErrors[currentError.path] =
+            currentError.message;
+        }
       });
 
       setErrors(newErrors);
       return false;
+    }
+  }
+
+  // Validates only the field that was changed
+  function validateField(field, data) {
+    try {
+      contactSchema.validateSyncAt(
+        field,
+        getFormData(data)
+      );
+
+      setErrors((previousErrors) => ({
+        ...previousErrors,
+        [field]: "",
+      }));
+    } catch (error) {
+      setErrors((previousErrors) => ({
+        ...previousErrors,
+        [field]: error.message,
+      }));
     }
   }
 
@@ -100,10 +130,22 @@ function ContactUs() {
     };
 
     setForm(updatedForm);
-    validateForm(updatedForm);
+
+    // The checkbox values are converted into one genres array
+    if (
+      field === "action" ||
+      field === "comedy" ||
+      field === "drama"
+    ) {
+      validateField("genres", updatedForm);
+    } else {
+      validateField(field, updatedForm);
+    }
   }
 
-  const isFormValid = contactSchema.isValidSync(getFormData(form));
+  const isFormValid = contactSchema.isValidSync(
+    getFormData(form)
+  );
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -133,24 +175,34 @@ function ContactUs() {
   return (
     <div className="min-h-screen bg-black text-white flex justify-center items-center px-6 py-20">
       <div className="bg-[#0B1220] w-full max-w-xl rounded-2xl p-8 border border-gray-700">
-        <h1 className="text-4xl font-bold text-center mb-4">Contact Us</h1>
+        <h1 className="text-4xl font-bold text-center mb-4">
+          Contact Us
+        </h1>
 
         <p className="text-gray-400 text-center mb-8">
           Have a question? Send us a message.
         </p>
 
-        <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-5">
+        <form
+          noValidate
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-5"
+        >
           <div>
             <input
               type="text"
               placeholder="Full Name"
               value={form.name}
-              onChange={(e) => handleChange("name", e.target.value)}
+              onChange={(e) =>
+                handleChange("name", e.target.value)
+              }
               className="w-full bg-black border border-gray-600 rounded-lg px-4 py-3 outline-none focus:border-green-400"
             />
 
             {errors.name && (
-              <p className="text-red-400 text-sm mt-1">{errors.name}</p>
+              <p className="text-red-400 text-sm mt-1">
+                {errors.name}
+              </p>
             )}
           </div>
 
@@ -159,29 +211,41 @@ function ContactUs() {
               type="email"
               placeholder="Email"
               value={form.email}
-              onChange={(e) => handleChange("email", e.target.value)}
+              onChange={(e) =>
+                handleChange("email", e.target.value)
+              }
               className="w-full bg-black border border-gray-600 rounded-lg px-4 py-3 outline-none focus:border-green-400"
             />
 
             {errors.email && (
-              <p className="text-red-400 text-sm mt-1">{errors.email}</p>
+              <p className="text-red-400 text-sm mt-1">
+                {errors.email}
+              </p>
             )}
           </div>
 
           <div>
             <select
               value={form.subject}
-              onChange={(e) => handleChange("subject", e.target.value)}
+              onChange={(e) =>
+                handleChange("subject", e.target.value)
+              }
               className="w-full bg-black border border-gray-600 rounded-lg px-4 py-3 outline-none focus:border-green-400"
             >
               <option value="">Select Subject</option>
-              <option value="Question">Question</option>
-              <option value="Feedback">Feedback</option>
+              <option value="Question">
+                Question
+              </option>
+              <option value="Feedback">
+                Feedback
+              </option>
               <option value="Support">Support</option>
             </select>
 
             {errors.subject && (
-              <p className="text-red-400 text-sm mt-1">{errors.subject}</p>
+              <p className="text-red-400 text-sm mt-1">
+                {errors.subject}
+              </p>
             )}
           </div>
 
@@ -189,7 +253,9 @@ function ContactUs() {
             <textarea
               placeholder="Message"
               value={form.message}
-              onChange={(e) => handleChange("message", e.target.value)}
+              onChange={(e) =>
+                handleChange("message", e.target.value)
+              }
               className="w-full bg-black border border-gray-600 rounded-lg px-4 py-3 h-32 outline-none focus:border-green-400"
             />
 
@@ -204,19 +270,29 @@ function ContactUs() {
             </p>
 
             {errors.message && (
-              <p className="text-red-400 text-sm mt-1">{errors.message}</p>
+              <p className="text-red-400 text-sm mt-1">
+                {errors.message}
+              </p>
             )}
           </div>
 
           <div>
-            <p className="font-semibold mb-2">Interested Genres</p>
+            <p className="font-semibold mb-2">
+              Interested Genres
+            </p>
 
             <label className="block mb-2">
               <input
                 type="checkbox"
                 checked={form.action}
-                onChange={(e) => handleChange("action", e.target.checked)}
+                onChange={(e) =>
+                  handleChange(
+                    "action",
+                    e.target.checked
+                  )
+                }
               />
+
               <span className="ml-2">Action</span>
             </label>
 
@@ -224,8 +300,14 @@ function ContactUs() {
               <input
                 type="checkbox"
                 checked={form.comedy}
-                onChange={(e) => handleChange("comedy", e.target.checked)}
+                onChange={(e) =>
+                  handleChange(
+                    "comedy",
+                    e.target.checked
+                  )
+                }
               />
+
               <span className="ml-2">Comedy</span>
             </label>
 
@@ -233,13 +315,21 @@ function ContactUs() {
               <input
                 type="checkbox"
                 checked={form.drama}
-                onChange={(e) => handleChange("drama", e.target.checked)}
+                onChange={(e) =>
+                  handleChange(
+                    "drama",
+                    e.target.checked
+                  )
+                }
               />
+
               <span className="ml-2">Drama</span>
             </label>
 
             {errors.genres && (
-              <p className="text-red-400 text-sm mt-1">{errors.genres}</p>
+              <p className="text-red-400 text-sm mt-1">
+                {errors.genres}
+              </p>
             )}
           </div>
 
@@ -249,10 +339,16 @@ function ContactUs() {
                 type="checkbox"
                 checked={form.acceptTerms}
                 onChange={(e) =>
-                  handleChange("acceptTerms", e.target.checked)
+                  handleChange(
+                    "acceptTerms",
+                    e.target.checked
+                  )
                 }
               />
-              <span className="ml-2">I accept the terms</span>
+
+              <span className="ml-2">
+                I accept the terms
+              </span>
             </label>
 
             {errors.acceptTerms && (
@@ -264,11 +360,10 @@ function ContactUs() {
 
           <button
             type="submit"
-            disabled={!isFormValid}
             className={
               isFormValid
-                ? "bg-green-400 text-black font-bold py-3 rounded-lg hover:bg-green-500"
-                : "bg-gray-500 text-black font-bold py-3 rounded-lg cursor-not-allowed"
+                ? "bg-green-400 text-black font-bold py-3 rounded-lg hover:bg-green-500 cursor-pointer"
+                : "bg-gray-500 text-black font-bold py-3 rounded-lg cursor-pointer"
             }
           >
             Send
