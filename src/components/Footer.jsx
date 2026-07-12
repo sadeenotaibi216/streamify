@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 function FooterLink({ children }) {
   return <p className="text-gray-400 mb-2 text-sm md:text-base">{children}</p>;
 }
@@ -37,7 +38,9 @@ function Footer() {
             <FooterLink>About Us</FooterLink>
             <FooterLink>Careers</FooterLink>
             <FooterLink>Press</FooterLink>
-            <FooterLink>Contact Us</FooterLink>
+            <Link to="/contact" className="text-gray-400 hover:text-green-400">
+              Contact Us
+            </Link>
           </div>
 
           <div>
