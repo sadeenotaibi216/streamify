@@ -1,25 +1,44 @@
-function FeatureItem({ imgSrc, imgAlt, title, description }) {
+function FeatureItem({
+  imgSrc,
+  imgAlt,
+  title,
+  description,
+}) {
   return (
-    <div className="flex items-center gap-3 w-full sm:w-[45%] lg:w-[22%]">
-      <img src={imgSrc} alt={imgAlt} className="w-14 h-14 md:w-20 md:h-20" />
+    <div className="flex w-full items-center gap-3 sm:w-[45%] lg:w-[22%]">
+      <img
+        src={imgSrc}
+        alt={imgAlt}
+        className="h-14 w-14 md:h-20 md:w-20"
+      />
 
       <div>
-        <p className="text-white text-base md:text-xl font-semibold">{title}</p>
+        <p className="text-base font-semibold md:text-xl">
+          {title}
+        </p>
 
-        <p className="text-gray-400 text-sm md:text-base">{description}</p>
+        <p className="text-sm opacity-70 md:text-base">
+          {description}
+        </p>
       </div>
     </div>
   );
 }
 
-function MiddlePart() {
+function MiddlePart({ theme }) {
   return (
-    <div className="text-white py-10 bg-[#020710]">
-      <h1 className="text-white text-3xl md:text-4xl font-bold text-center mb-8">
+    <div
+      className={`py-10 ${
+        theme === "dark"
+          ? "bg-[#020710] text-white"
+          : "bg-white text-black"
+      }`}
+    >
+      <h1 className="mb-8 text-center text-3xl font-bold md:text-4xl">
         Why Streamify?
       </h1>
 
-      <div className="flex flex-wrap justify-center lg:justify-between gap-6 px-6 md:px-16">
+      <div className="flex flex-wrap justify-center gap-6 px-6 md:px-16 lg:justify-between">
         <FeatureItem
           imgSrc="/6.png"
           imgAlt="Thousands of titles"
