@@ -3,9 +3,17 @@ import Hero from "../components/Hero";
 import MiddlePart from "../components/MiddlePart";
 import Plan from "../components/Plan";
 
-function HomePage({ user, language }) {
+function HomePage(props) {
+  const { user, theme, language } = props;
+
   return (
-    <main className="min-h-screen bg-white text-black transition-colors dark:bg-black dark:text-white">
+    <main
+      className={`min-h-screen transition-colors ${
+        theme === "dark"
+          ? "bg-black text-white"
+          : "bg-white text-black"
+      }`}
+    >
       {user?.username && (
         <div className="bg-green-400 px-6 py-3 text-center font-semibold text-black">
           {language === "en"
@@ -14,13 +22,13 @@ function HomePage({ user, language }) {
         </div>
       )}
 
-      <Hero />
+      <Hero theme={theme} />
 
-      <MiddlePart />
+      <MiddlePart theme={theme} />
 
-      <Plan />
+      <Plan theme={theme} />
 
-      <FAQ />
+      <FAQ theme={theme} />
     </main>
   );
 }

@@ -26,7 +26,13 @@ function Header({
         ];
 
   return (
-    <header className="flex flex-col items-center justify-between gap-4 border-b border-gray-300 bg-white px-4 py-4 text-black transition-colors dark:border-gray-800 dark:bg-black dark:text-white md:flex-row md:px-8">
+ <header
+  className={`flex flex-col items-center justify-between gap-4 border-b px-4 py-4 transition-colors md:flex-row md:px-8 ${
+    theme === "dark"
+      ? "border-gray-800 bg-black text-white"
+      : "border-gray-300 bg-white text-black"
+  }`}
+>
       <NavLink to="/" className="flex items-center gap-2">
         <img
           src="/logo.png"

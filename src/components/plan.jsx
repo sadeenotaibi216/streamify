@@ -2,12 +2,16 @@ import { useState } from "react";
 import Cards from "./Cards";
 import Button from "./Buttons";
 
-function Plan() {
+function Plan({theme}) {
   const [userPlan, setUserPlan] = useState("monthly");
 
   return (
     <>
-      <h1 className="text-white text-3xl md:text-4xl font-bold text-center mb-8 px-4 md:px-8 py-8">
+      <h1 className={` text-3xl md:text-4xl font-bold text-center mb-8 px-4 md:px-8 py-8 ${
+        theme === "dark"
+          ? "bg-black text-white"
+          : "bg-white text-black"
+      }`}>
         Choose Your Plan
       </h1>
 
