@@ -3,17 +3,34 @@ import Hero from "../components/Hero";
 import MiddlePart from "../components/MiddlePart";
 import Plan from "../components/Plan";
 
-function HomePage() {
+function HomePage(props) {
+  const { user, theme, language } = props;
+
   return (
-    <>
-      <Hero />
+    <main
+      className={`min-h-screen transition-colors ${
+        theme === "dark"
+          ? "bg-black text-white"
+          : "bg-white text-black"
+      }`}
+    >
+      {user?.username && (
+        <div className="bg-green-400 px-6 py-3 text-center font-semibold text-black">
+          {language === "en"
+            ? `Hi ${user.username}!`
+            : `مرحباً ${user.username}!`}
+        </div>
+      )}
 
-      <MiddlePart />
+      <Hero theme={theme} />
 
-      <Plan />
+      <MiddlePart theme={theme} />
 
-      <FAQ />
-    </>
+      <Plan theme={theme} />
+
+      <FAQ theme={theme} />
+    </main>
   );
 }
+
 export default HomePage;
