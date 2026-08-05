@@ -1,7 +1,8 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router";
-
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "./store/themeSlice";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
@@ -10,11 +11,14 @@ import Placeholder from "./pages/Placeholder";
 import SignIn from "./pages/SignIn";
 
 function App() {
-  const [user, setUser] = useState((localStorage.getItem("user"))) ;
-    const [theme, setTheme] = useState(localStorage.getItem("theme"));
-const [language, setLanguage] = useState(localStorage.getItem("language"));
+  const [user, setUser] = useState(localStorage.getItem("user"));
+  // const [theme, setTheme] = useState(localStorage.getItem("theme"));
+  const theme = useSelector((state) => {
+    return state.theme.theme;
+  });
+  const [language, setLanguage] = useState(localStorage.getItem("language"));
 
-
+  const dispatch = useDispatch();
   useEffect(() => {
     if (user && user.username) {
       localStorage.setItem("user", JSON.stringify(user));
@@ -22,20 +26,16 @@ const [language, setLanguage] = useState(localStorage.getItem("language"));
   }, [user]);
 
   useEffect(() => {
-   
-
     if (theme === "dark") {
-      localStorage.setItem("theme", "dark");
+      // localStorage.setItem("theme", "dark");
       document.documentElement.classList.add("dark");
     } else {
-      localStorage.setItem("theme", "light");
+      // localStorage.setItem("theme", "light");
       document.documentElement.classList.remove("dark");
     }
-   
   }, [theme]);
 
   useEffect(() => {
-    
     localStorage.setItem("language", language);
 
     document.documentElement.lang = language;
@@ -46,9 +46,12 @@ const [language, setLanguage] = useState(localStorage.getItem("language"));
     setUser(null);
   }
 
-  function toggleTheme() {
-    // setTheme((previousTheme) => (previousTheme === "dark" ? "light" : "dark"));
-    setTheme(theme === "dark" ? "light" : "dark");
+  // function toggleTheme() {
+  //   // setTheme((previousTheme) => (previousTheme === "dark" ? "light" : "dark"));
+  //   // setTheme(theme === "dark" ? "light" : "dark");
+  // }
+  function handleToggleTheme() {
+    dispatch(toggleTheme());
   }
 
   function toggleLanguage() {
@@ -64,7 +67,7 @@ const [language, setLanguage] = useState(localStorage.getItem("language"));
         theme={theme}
         language={language}
         onSignOut={handleSignOut}
-        onToggleTheme={toggleTheme}
+        onToggleTheme={handleToggleTheme}
         onToggleLanguage={toggleLanguage}
       />
 
