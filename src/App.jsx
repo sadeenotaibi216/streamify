@@ -9,12 +9,14 @@ import HomePage from "./pages/HomePage";
 import ContactUs from "./pages/ContactUs";
 import Placeholder from "./pages/Placeholder";
 import SignIn from "./pages/SignIn";
-
+import Movies from "./pages/Movies";
+// import NewPost from "./pages/NewPost";
 function App() {
   const [user, setUser] = useState(localStorage.getItem("user"));
   // const [theme, setTheme] = useState(localStorage.getItem("theme"));
   const theme = useSelector((state) => {
-    return state.theme.theme;
+    // console.log({ state });
+    return state.sadeen.theme;
   });
   const [language, setLanguage] = useState(localStorage.getItem("language"));
 
@@ -82,8 +84,8 @@ function App() {
           element={<Placeholder title="TV Shows Page" />}
         />
 
-        <Route path="/movies" element={<Placeholder title="Movies Page" />} />
-
+        {/* <Route path="/movies" element={<Placeholder title="Movies Page" />} /> */}
+        <Route path="/movies" element={<Movies theme={theme} />} />
         <Route path="/kids" element={<Placeholder title="Kids Page" />} />
 
         <Route path="/my-list" element={<Placeholder title="My List Page" />} />
@@ -101,6 +103,7 @@ function App() {
           path="/free-trial"
           element={<Placeholder title="Free Trial Page" />}
         />
+        {/* <Route path="/new-page" element={<NewPost />} /> */}
       </Routes>
 
       <Footer />

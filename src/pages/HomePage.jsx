@@ -2,16 +2,17 @@ import FAQ from "../components/Faq";
 import Hero from "../components/Hero";
 import MiddlePart from "../components/MiddlePart";
 import Plan from "../components/Plan";
-
+// import NewPost from "./NewPost";
+{
+  /* <NewPost theme={theme} /> */
+}
 function HomePage(props) {
   const { user, theme, language } = props;
 
   return (
     <main
       className={`min-h-screen transition-colors ${
-        theme === "dark"
-          ? "bg-black text-white"
-          : "bg-white text-black"
+        theme === "dark" ? "bg-black text-white" : "bg-white text-black"
       }`}
     >
       {user?.username && (
@@ -21,9 +22,9 @@ function HomePage(props) {
             : `مرحباً ${user.username}!`}
         </div>
       )}
-
       <Hero theme={theme} />
 
+      {/* <NewPost theme={theme} /> */}
       <MiddlePart theme={theme} />
 
       <Plan theme={theme} />
