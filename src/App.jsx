@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "./store/themeSlice";
+import { toggleLanguage } from "./store/languageSlice";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
@@ -16,8 +17,10 @@ function App() {
   const theme = useSelector((state) => {
     return state.theme.theme;
   });
-  const [language, setLanguage] = useState(localStorage.getItem("language"));
-
+  // const [language, setLanguage] = useState(localStorage.getItem("language"));
+  const language = useSelector((state) => {
+    return state.language.language;
+  });
   const dispatch = useDispatch();
   useEffect(() => {
     if (user && user.username) {
@@ -36,7 +39,7 @@ function App() {
   }, [theme]);
 
   useEffect(() => {
-    localStorage.setItem("language", language);
+    // localStorage.setItem("language", language);
 
     document.documentElement.lang = language;
     document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
@@ -54,10 +57,8 @@ function App() {
     dispatch(toggleTheme());
   }
 
-  function toggleLanguage() {
-    setLanguage((previousLanguage) =>
-      previousLanguage === "en" ? "ar" : "en",
-    );
+  function handleToggleLanguage() {
+    dispatch(toggleLanguage());
   }
 
   return (
@@ -68,7 +69,7 @@ function App() {
         language={language}
         onSignOut={handleSignOut}
         onToggleTheme={handleToggleTheme}
-        onToggleLanguage={toggleLanguage}
+        onToggleLanguage={handleToggleLanguage}
       />
 
       <Routes>
