@@ -1,189 +1,148 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
-import * as yup from "yup";
+import { useEffect, useState } from "react";
+import getMovies from "../components/getMovies";
+import MovieCard from "../components/MovieCard";
+// import Button from "../components/Buttons";
 
-const userinfo = yup.object({
-  username: yup
-    .string()
-    .required("User name is required")
-    .min(4, "User name must be at least 4 characters")
-    .max(10, "User name must be at most 10 characters"),
+function NewPost({ theme }) {
+  const [movies, setMovies] = useState([]);
+  const [startIndex, setStartIndex] = useState(0);
+  const [page, setPage] = useState(1);
+  const [moviesPerPage, setMoviesPerPage] = useState(6);
+  const [isLoading, setIsLoading] = useState(false);
+  // const [isBouncing, setIsBouncing] = useState(false);
+  // useEffect(() => {
+  //   check screen size();
 
-  email: yup
-    .string()
-    .required("Email is required")
-    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please enter a valid email"),
+  //   start resize();
 
-  password: yup
-    .string()
-    .required("Password is required")
-    .min(8, "Password must be at least 8 characters")
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d).+$/,
-      "Password must contain at least one letter and one number",
-    ),
-});
+  //   return  cleanup{
+  //     stop;
+  //   };
+  // }, []);
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth < 640) {
+        setMoviesPerPage(1);
+      } else if (window.innerWidth < 768) {
+        setMoviesPerPage(2);
+      } else if (window.innerWidth < 1024) {
+        setMoviesPerPage(3);
+      } else if (window.innerWidth < 1280) {
+        setMoviesPerPage(4);
+      } else {
+        setMoviesPerPage(6);
+      }
+    }
 
-const existingUser = {
-  username: "Sadeen",
-  email: "sadeen@gmail.com",
-  password: "Sadeen123",
-};
+    handleResize();
 
-function SignIn({ onSignIn, theme }) {
-  const navigate = useNavigate();
+    window.addEventListener("resize", handleResize);
 
-  const [form, setForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+    return function cleanup() {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
-  const [errors, setErrors] = useState({});
-  const [loginError, setLoginError] = useState("");
+  useEffect(() => {
+    const controller = new AbortController();
 
-  function validateForm() {
-    try {
-      userinfo.validateSync(form, {
-        abortEarly: false,
-      });
+    async function fetchMovies() {
+      setIsLoading(true);
 
-      setErrors({});
-      return true;
-    } catch (error) {
-      const newErrors = {};
+      try {
+        const result = await getMovies(page, controller.signal);
 
-      error.inner.forEach((currentError) => {
-        if (!newErrors[currentError.path]) {
-          newErrors[currentError.path] = currentError.message;
+        setMovies((previousMovies) => {
+          return [...previousMovies, ...result.results];
+        });
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          console.error(error.message);
         }
+      } finally {
+        if (!controller.signal.aborted) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    fetchMovies();
+
+    return function cleanup() {
+      controller.abort();
+    };
+  }, [page]);
+
+  const visibleMovies = movies.slice(startIndex, startIndex + moviesPerPage);
+
+  function showNextMovies() {
+    if (startIndex + moviesPerPage < movies.length) {
+      setStartIndex((previousIndex) => {
+        return previousIndex + moviesPerPage;
       });
+    }
 
-      setErrors(newErrors);
-      return false;
+    if (startIndex + moviesPerPage * 2 >= movies.length) {
+      setPage((previousPage) => {
+        return previousPage + 1;
+      });
     }
   }
 
-  function handleChange(field, value) {
-    setForm({
-      ...form,
-      [field]: value,
-    });
-
-    setLoginError("");
+  function showPreviousMovies() {
+    if (startIndex > 0) {
+      setStartIndex((previousIndex) => {
+        return Math.max(0, previousIndex - moviesPerPage);
+      });
+    }
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  const previousButtonDisabled = isLoading || startIndex === 0;
 
-    const valid = validateForm();
-
-    if (!valid) {
-      return;
-    }
-
-    const correctUser =
-      form.username === existingUser.username &&
-      form.email === existingUser.email &&
-      form.password === existingUser.password;
-
-    if (!correctUser) {
-      setLoginError("Incorrect username, email, or password");
-      return;
-    }
-
-    onSignIn({
-      username: form.username,
-      email: form.email,
-    });
-
-    navigate("/");
-  }
-
-  const inputStyle = `w-full rounded-lg border p-3 outline-none transition-colors duration-300 ${
-    theme === "dark"
-      ? "border-gray-600 bg-gray-800 text-white placeholder:text-gray-400"
-      : "border-gray-300 bg-white text-black placeholder:text-gray-500"
-  }`;
+  const nextButtonDisabled =
+    isLoading || startIndex + moviesPerPage >= movies.length;
 
   return (
-    <div
-      className={`flex min-h-screen items-center justify-center px-6 py-20 transition-colors duration-300 ${
-        theme === "dark" ? "bg-black text-white" : "bg-white text-black"
-      }`}
-    >
-      <div
-        className={`w-full max-w-xl rounded-2xl border p-8 shadow-lg transition-colors duration-300 ${
-          theme === "dark"
-            ? "border-gray-700 bg-[#0B1220] text-white"
-            : "border-gray-300 bg-white text-black"
-        }`}
-      >
-        <h1 className="mb-6 text-center text-4xl font-bold">Sign In</h1>
+    <div className="w-full overflow-hidden p-3 sm:p-5 lg:p-8">
+      <div className="flex w-full items-center gap-2 sm:gap-4">
+        <button
+          type="button"
+          onClick={showPreviousMovies}
+          disabled={previousButtonDisabled}
+          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-lg font-bold transition sm:h-10 sm:w-10 sm:text-xl ${
+            previousButtonDisabled
+              ? "cursor-not-allowed bg-gray-300 text-gray-500 opacity-50"
+              : "cursor-pointer bg-green-400 text-black hover:bg-green-300"
+          }`}
+        >
+          ←
+        </button>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          <div>
-            <label className="mb-2 block">User Name</label>
+        <div className="grid min-w-0 flex-1 grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 xl:gap-5">
+          {visibleMovies.map((movie) => {
+            return (
+              <div key={movie.id} className="min-w-0 w-full">
+                <MovieCard movie={movie} theme={theme} />
+              </div>
+            );
+          })}
+        </div>
 
-            <input
-              type="text"
-              placeholder="User Name"
-              value={form.username}
-              onChange={(event) => handleChange("username", event.target.value)}
-              className={inputStyle}
-            />
-
-            {errors.username && (
-              <p className="mt-1 text-red-400">{errors.username}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="mb-2 block">Email</label>
-
-            <input
-              type="email"
-              placeholder="Email"
-              value={form.email}
-              onChange={(event) => handleChange("email", event.target.value)}
-              className={inputStyle}
-            />
-
-            {errors.email && (
-              <p className="mt-1 text-red-400">{errors.email}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="mb-2 block">Password</label>
-
-            <input
-              type="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={(event) => handleChange("password", event.target.value)}
-              className={inputStyle}
-            />
-
-            {errors.password && (
-              <p className="mt-1 text-red-400">{errors.password}</p>
-            )}
-          </div>
-
-          {loginError && (
-            <p className="text-center text-red-400">{loginError}</p>
-          )}
-
-          <button
-            type="submit"
-            className="cursor-pointer rounded-lg bg-green-400 p-3 font-semibold text-black transition-colors duration-300 hover:bg-green-300"
-          >
-            Sign In
-          </button>
-        </form>
+        <button
+          type="button"
+          onClick={showNextMovies}
+          disabled={nextButtonDisabled}
+          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-lg font-bold transition sm:h-10 sm:w-10 sm:text-xl ${
+            nextButtonDisabled
+              ? "cursor-not-allowed bg-gray-300 text-gray-500 opacity-50"
+              : "cursor-pointer bg-green-400 text-black hover:bg-green-300"
+          }`}
+        >
+          →
+        </button>
       </div>
     </div>
   );
 }
 
-export default SignIn;
+export default NewPost;

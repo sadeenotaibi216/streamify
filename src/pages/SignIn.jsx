@@ -99,26 +99,30 @@ function SignIn({ onSignIn, theme }) {
 
     navigate("/");
   }
+  const isFormValid = userinfo.isValidSync(form);
+
+  const inputStyle = `w-full rounded-lg border p-3 outline-none transition-colors duration-300 ${
+    theme === "dark"
+      ? "border-gray-600 bg-gray-800 text-white placeholder:text-gray-400"
+      : "border-gray-300 bg-white text-black placeholder:text-gray-500"
+  }`;
 
   return (
     <div
-      className={`flex min-h-screen items-center justify-center bg-black px-6 py-20 text-white ${
+      className={`flex min-h-screen items-center justify-center px-6 py-20 transition-colors duration-300 ${
         theme === "dark" ? "bg-black text-white" : "bg-white text-black"
       }`}
     >
       <div
-        className={`w-full max-w-xl rounded-2xl border border-gray-700 bg-[#0B1220] p-8 ${
-          theme === "dark" ? "bg-black text-white" : "bg-white text-black"
+        className={`w-full max-w-xl rounded-2xl border p-8 shadow-lg transition-colors duration-300 ${
+          theme === "dark"
+            ? "border-gray-700 bg-[#0B1220] text-white"
+            : "border-gray-300 bg-white text-black"
         }`}
       >
         <h1 className="mb-6 text-center text-4xl font-bold">Sign In</h1>
 
-        <form
-          onSubmit={handleSubmit}
-          className={`flex flex-col gap-5 ${
-            theme === "dark" ? "bg-black text-white" : "bg-white text-black"
-          }`}
-        >
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <div>
             <label className="mb-2 block">User Name</label>
 
@@ -127,11 +131,7 @@ function SignIn({ onSignIn, theme }) {
               placeholder="User Name"
               value={form.username}
               onChange={(event) => handleChange("username", event.target.value)}
-              className={`w-full rounded-lg border border-gray-600 bg-gray-800 p-3 ${
-                theme === "dark"
-                  ? "border-gray-600 bg-gray-800 text-white placeholder:text-gray-400"
-                  : "border-gray-300 bg-white text-black placeholder:text-gray-500"
-              }`}
+              className={inputStyle}
             />
 
             {errors.username && (
@@ -147,12 +147,9 @@ function SignIn({ onSignIn, theme }) {
               placeholder="Email"
               value={form.email}
               onChange={(event) => handleChange("email", event.target.value)}
-              className={`w-full rounded-lg border border-gray-600 bg-gray-800 p-3 ${
-                theme === "dark"
-                  ? "border-gray-600 bg-gray-800 text-white placeholder:text-gray-400"
-                  : "border-gray-300 bg-white text-black placeholder:text-gray-500"
-              }`}
+              className={inputStyle}
             />
+
             {errors.email && (
               <p className="mt-1 text-red-400">{errors.email}</p>
             )}
@@ -166,11 +163,7 @@ function SignIn({ onSignIn, theme }) {
               placeholder="Password"
               value={form.password}
               onChange={(event) => handleChange("password", event.target.value)}
-              className={`w-full rounded-lg border border-gray-600 bg-gray-800 p-3 ${
-                theme === "dark"
-                  ? "border-gray-600 bg-gray-800 text-white placeholder:text-gray-400"
-                  : "border-gray-300 bg-white text-black placeholder:text-gray-500"
-              }`}
+              className={inputStyle}
             />
 
             {errors.password && (
@@ -184,7 +177,11 @@ function SignIn({ onSignIn, theme }) {
 
           <button
             type="submit"
-            className="cursor-pointer rounded-lg bg-green-400 p-3 font-semibold text-black hover:bg-green-300"
+            className={
+              isFormValid
+                ? "cursor-pointer rounded-lg bg-green-400 p-3 font-semibold text-black hover:bg-green-300"
+                : "cursor-not-allowed rounded-lg bg-gray-500 p-3 font-semibold text-black"
+            }
           >
             Sign In
           </button>
