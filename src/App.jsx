@@ -10,13 +10,11 @@ import ContactUs from "./pages/ContactUs";
 import Placeholder from "./pages/Placeholder";
 import SignIn from "./pages/SignIn";
 import Movies from "./pages/Movies";
-// import NewPost from "./pages/NewPost";
 function App() {
   const [user, setUser] = useState(localStorage.getItem("user"));
   // const [theme, setTheme] = useState(localStorage.getItem("theme"));
   const theme = useSelector((state) => {
-    // console.log({ state });
-    return state.sadeen.theme;
+    return state.theme.theme;
   });
   const [language, setLanguage] = useState(localStorage.getItem("language"));
 
@@ -84,17 +82,19 @@ function App() {
           element={<Placeholder title="TV Shows Page" />}
         />
 
-        {/* <Route path="/movies" element={<Placeholder title="Movies Page" />} /> */}
-        <Route path="/movies" element={<Movies theme={theme} />} />
+        <Route path="/Movies" element={<Movies theme={theme} />} />
+
         <Route path="/kids" element={<Placeholder title="Kids Page" />} />
 
         <Route path="/my-list" element={<Placeholder title="My List Page" />} />
 
-        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/contact" element={<ContactUs theme={theme} />} />
 
         <Route
           path="/signin"
-          element={<SignIn onSignIn={setUser} language={language} />}
+          element={
+            <SignIn onSignIn={setUser} language={language} theme={theme} />
+          }
         />
 
         <Route path="/search" element={<Placeholder title="Search Page" />} />
@@ -103,7 +103,6 @@ function App() {
           path="/free-trial"
           element={<Placeholder title="Free Trial Page" />}
         />
-        {/* <Route path="/new-page" element={<NewPost />} /> */}
       </Routes>
 
       <Footer />

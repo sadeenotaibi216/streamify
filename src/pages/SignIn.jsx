@@ -12,10 +12,7 @@ const userinfo = yup.object({
   email: yup
     .string()
     .required("Email is required")
-    .matches(
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      "Please enter a valid email",
-    ),
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please enter a valid email"),
 
   password: yup
     .string()
@@ -33,7 +30,7 @@ const existingUser = {
   password: "Sadeen123",
 };
 
-function SignIn({ onSignIn }) {
+function SignIn({ onSignIn, theme }) {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -58,8 +55,7 @@ function SignIn({ onSignIn }) {
 
       error.inner.forEach((currentError) => {
         if (!newErrors[currentError.path]) {
-          newErrors[currentError.path] =
-            currentError.message;
+          newErrors[currentError.path] = currentError.message;
         }
       });
 
@@ -92,9 +88,7 @@ function SignIn({ onSignIn }) {
       form.password === existingUser.password;
 
     if (!correctUser) {
-      setLoginError(
-        "Incorrect username, email, or password",
-      );
+      setLoginError("Incorrect username, email, or password");
       return;
     }
 
@@ -107,38 +101,41 @@ function SignIn({ onSignIn }) {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-black px-6 py-20 text-white">
-      <div className="w-full max-w-xl rounded-2xl border border-gray-700 bg-[#0B1220] p-8">
-        <h1 className="mb-6 text-center text-4xl font-bold">
-          Sign In
-        </h1>
+    <div
+      className={`flex min-h-screen items-center justify-center bg-black px-6 py-20 text-white ${
+        theme === "dark" ? "bg-black text-white" : "bg-white text-black"
+      }`}
+    >
+      <div
+        className={`w-full max-w-xl rounded-2xl border border-gray-700 bg-[#0B1220] p-8 ${
+          theme === "dark" ? "bg-black text-white" : "bg-white text-black"
+        }`}
+      >
+        <h1 className="mb-6 text-center text-4xl font-bold">Sign In</h1>
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-5"
+          className={`flex flex-col gap-5 ${
+            theme === "dark" ? "bg-black text-white" : "bg-white text-black"
+          }`}
         >
           <div>
-            <label className="mb-2 block">
-              User Name
-            </label>
+            <label className="mb-2 block">User Name</label>
 
             <input
               type="text"
               placeholder="User Name"
               value={form.username}
-              onChange={(event) =>
-                handleChange(
-                  "username",
-                  event.target.value,
-                )
-              }
-              className="w-full rounded-lg border border-gray-600 bg-gray-800 p-3"
+              onChange={(event) => handleChange("username", event.target.value)}
+              className={`w-full rounded-lg border border-gray-600 bg-gray-800 p-3 ${
+                theme === "dark"
+                  ? "border-gray-600 bg-gray-800 text-white placeholder:text-gray-400"
+                  : "border-gray-300 bg-white text-black placeholder:text-gray-500"
+              }`}
             />
 
             {errors.username && (
-              <p className="mt-1 text-red-400">
-                {errors.username}
-              </p>
+              <p className="mt-1 text-red-400">{errors.username}</p>
             )}
           </div>
 
@@ -149,51 +146,40 @@ function SignIn({ onSignIn }) {
               type="email"
               placeholder="Email"
               value={form.email}
-              onChange={(event) =>
-                handleChange(
-                  "email",
-                  event.target.value,
-                )
-              }
-              className="w-full rounded-lg border border-gray-600 bg-gray-800 p-3"
+              onChange={(event) => handleChange("email", event.target.value)}
+              className={`w-full rounded-lg border border-gray-600 bg-gray-800 p-3 ${
+                theme === "dark"
+                  ? "border-gray-600 bg-gray-800 text-white placeholder:text-gray-400"
+                  : "border-gray-300 bg-white text-black placeholder:text-gray-500"
+              }`}
             />
-
             {errors.email && (
-              <p className="mt-1 text-red-400">
-                {errors.email}
-              </p>
+              <p className="mt-1 text-red-400">{errors.email}</p>
             )}
           </div>
 
           <div>
-            <label className="mb-2 block">
-              Password
-            </label>
+            <label className="mb-2 block">Password</label>
 
             <input
               type="password"
               placeholder="Password"
               value={form.password}
-              onChange={(event) =>
-                handleChange(
-                  "password",
-                  event.target.value,
-                )
-              }
-              className="w-full rounded-lg border border-gray-600 bg-gray-800 p-3"
+              onChange={(event) => handleChange("password", event.target.value)}
+              className={`w-full rounded-lg border border-gray-600 bg-gray-800 p-3 ${
+                theme === "dark"
+                  ? "border-gray-600 bg-gray-800 text-white placeholder:text-gray-400"
+                  : "border-gray-300 bg-white text-black placeholder:text-gray-500"
+              }`}
             />
 
             {errors.password && (
-              <p className="mt-1 text-red-400">
-                {errors.password}
-              </p>
+              <p className="mt-1 text-red-400">{errors.password}</p>
             )}
           </div>
 
           {loginError && (
-            <p className="text-center text-red-400">
-              {loginError}
-            </p>
+            <p className="text-center text-red-400">{loginError}</p>
           )}
 
           <button

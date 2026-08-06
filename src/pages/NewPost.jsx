@@ -1,133 +1,189 @@
-import { useEffect, useRef, useState } from "react";
-import getMovies from "../components/getMovies";
-import MovieCard from "../components/MovieCard";
-// import Button from "../components/Buttons";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import * as yup from "yup";
 
-function NewPost({ theme }) {
-  const [movies, setMovies] = useState([]);
-  const [startIndex, setStartIndex] = useState(0);
-  const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isBouncing, setIsBouncing] = useState(false);
+const userinfo = yup.object({
+  username: yup
+    .string()
+    .required("User name is required")
+    .min(4, "User name must be at least 4 characters")
+    .max(10, "User name must be at most 10 characters"),
 
-  const bounceTimeout = useRef(null);
-  const moviesPerPage = 6;
+  email: yup
+    .string()
+    .required("Email is required")
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please enter a valid email"),
 
-  useEffect(() => {
-    const controller = new AbortController();
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters")
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d).+$/,
+      "Password must contain at least one letter and one number",
+    ),
+});
 
-    async function fetchMovies() {
-      setIsLoading(true);
+const existingUser = {
+  username: "Sadeen",
+  email: "sadeen@gmail.com",
+  password: "Sadeen123",
+};
 
-      try {
-        const result = await getMovies(page, controller.signal);
+function SignIn({ onSignIn, theme }) {
+  const navigate = useNavigate();
 
-        setMovies((previousMovies) => {
-          return [...previousMovies, ...result.results];
-        });
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          console.error(error.message);
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({});
+  const [loginError, setLoginError] = useState("");
+
+  function validateForm() {
+    try {
+      userinfo.validateSync(form, {
+        abortEarly: false,
+      });
+
+      setErrors({});
+      return true;
+    } catch (error) {
+      const newErrors = {};
+
+      error.inner.forEach((currentError) => {
+        if (!newErrors[currentError.path]) {
+          newErrors[currentError.path] = currentError.message;
         }
-      } finally {
-        if (!controller.signal.aborted) {
-          setIsLoading(false);
-        }
-      }
-    }
-
-    fetchMovies();
-
-    return function cleanup() {
-      controller.abort();
-    };
-  }, [page]);
-
-  useEffect(() => {
-    return function cleanup() {
-      clearTimeout(bounceTimeout.current);
-    };
-  }, []);
-
-  const visibleMovies = movies.slice(startIndex, startIndex + moviesPerPage);
-
-  function startBounceAnimation() {
-    clearTimeout(bounceTimeout.current);
-
-    setIsBouncing(true);
-
-    bounceTimeout.current = setTimeout(() => {
-      setIsBouncing(false);
-    }, 500);
-  }
-
-  function showNextMovies() {
-    if (startIndex + moviesPerPage < movies.length) {
-      setStartIndex((previousIndex) => {
-        return previousIndex + moviesPerPage;
       });
 
-      startBounceAnimation();
-    }
-
-    if (startIndex + moviesPerPage * 2 >= movies.length) {
-      setPage((previousPage) => {
-        return previousPage + 1;
-      });
+      setErrors(newErrors);
+      return false;
     }
   }
 
-  function showPreviousMovies() {
-    if (startIndex > 0) {
-      setStartIndex((previousIndex) => {
-        return previousIndex - moviesPerPage;
-      });
+  function handleChange(field, value) {
+    setForm({
+      ...form,
+      [field]: value,
+    });
 
-      startBounceAnimation();
-    }
+    setLoginError("");
   }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    const valid = validateForm();
+
+    if (!valid) {
+      return;
+    }
+
+    const correctUser =
+      form.username === existingUser.username &&
+      form.email === existingUser.email &&
+      form.password === existingUser.password;
+
+    if (!correctUser) {
+      setLoginError("Incorrect username, email, or password");
+      return;
+    }
+
+    onSignIn({
+      username: form.username,
+      email: form.email,
+    });
+
+    navigate("/");
+  }
+
+  const inputStyle = `w-full rounded-lg border p-3 outline-none transition-colors duration-300 ${
+    theme === "dark"
+      ? "border-gray-600 bg-gray-800 text-white placeholder:text-gray-400"
+      : "border-gray-300 bg-white text-black placeholder:text-gray-500"
+  }`;
 
   return (
-    <div className="p-8">
-      <div className="flex items-center gap-4">
-        <button
-          type="button"
-          onClick={showPreviousMovies}
-          disabled={isLoading || startIndex === 0}
-          className={`flex h-10 w-10 items-center justify-center rounded-lg text-xl font-bold ${
-            isLoading || startIndex === 0
-              ? "cursor-not-allowed bg-gray-300 text-gray-500 opacity-50"
-              : "cursor-pointer bg-green-400 text-black hover:bg-green-300"
-          }`}
-        >
-          ←
-        </button>
+    <div
+      className={`flex min-h-screen items-center justify-center px-6 py-20 transition-colors duration-300 ${
+        theme === "dark" ? "bg-black text-white" : "bg-white text-black"
+      }`}
+    >
+      <div
+        className={`w-full max-w-xl rounded-2xl border p-8 shadow-lg transition-colors duration-300 ${
+          theme === "dark"
+            ? "border-gray-700 bg-[#0B1220] text-white"
+            : "border-gray-300 bg-white text-black"
+        }`}
+      >
+        <h1 className="mb-6 text-center text-4xl font-bold">Sign In</h1>
 
-        <div
-          className={`grid flex-1 grid-cols-6 gap-5 ${
-            isBouncing ? "animate-bounce" : ""
-          }`}
-        >
-          {visibleMovies.map((movie) => {
-            return <MovieCard key={movie.id} movie={movie} theme={theme} />;
-          })}
-        </div>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          <div>
+            <label className="mb-2 block">User Name</label>
 
-        <button
-          type="button"
-          onClick={showNextMovies}
-          disabled={isLoading || startIndex + moviesPerPage >= movies.length}
-          className={`flex h-10 w-10 items-center justify-center rounded-lg text-xl font-bold ${
-            isLoading || startIndex + moviesPerPage >= movies.length
-              ? "cursor-not-allowed bg-gray-300 text-gray-500 opacity-50"
-              : "cursor-pointer bg-green-400 text-black hover:bg-green-300"
-          }`}
-        >
-          →
-        </button>
+            <input
+              type="text"
+              placeholder="User Name"
+              value={form.username}
+              onChange={(event) => handleChange("username", event.target.value)}
+              className={inputStyle}
+            />
+
+            {errors.username && (
+              <p className="mt-1 text-red-400">{errors.username}</p>
+            )}
+          </div>
+
+          <div>
+            <label className="mb-2 block">Email</label>
+
+            <input
+              type="email"
+              placeholder="Email"
+              value={form.email}
+              onChange={(event) => handleChange("email", event.target.value)}
+              className={inputStyle}
+            />
+
+            {errors.email && (
+              <p className="mt-1 text-red-400">{errors.email}</p>
+            )}
+          </div>
+
+          <div>
+            <label className="mb-2 block">Password</label>
+
+            <input
+              type="password"
+              placeholder="Password"
+              value={form.password}
+              onChange={(event) => handleChange("password", event.target.value)}
+              className={inputStyle}
+            />
+
+            {errors.password && (
+              <p className="mt-1 text-red-400">{errors.password}</p>
+            )}
+          </div>
+
+          {loginError && (
+            <p className="text-center text-red-400">{loginError}</p>
+          )}
+
+          <button
+            type="submit"
+            className="cursor-pointer rounded-lg bg-green-400 p-3 font-semibold text-black transition-colors duration-300 hover:bg-green-300"
+          >
+            Sign In
+          </button>
+        </form>
       </div>
     </div>
   );
 }
 
-export default NewPost;
+export default SignIn;
