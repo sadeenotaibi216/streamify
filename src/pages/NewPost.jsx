@@ -10,16 +10,7 @@ function NewPost({ theme }) {
   const [page, setPage] = useState(1);
   const [moviesPerPage, setMoviesPerPage] = useState(6);
   const [isLoading, setIsLoading] = useState(false);
-  // const [isBouncing, setIsBouncing] = useState(false);
-  // useEffect(() => {
-  //   check screen size();
 
-  //   start resize();
-
-  //   return  cleanup{
-  //     stop;
-  //   };
-  // }, []);
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth < 640) {

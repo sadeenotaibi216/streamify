@@ -108,10 +108,6 @@ function Cards({ userPlan, theme }) {
           theme={theme}
         />
       </div>
-
-      {/* <Button className="absolute right-[-25px] top-1/2 -translate-y-1/2 rounded-full bg-green-400 px-2 py-1 font-sans text-xs text-black shadow-lg shadow-green-400/50 md:right-[-38px] md:px-3 md:text-sm">
-        Save 20%
-      </Button> */}
     </>
   );
 }

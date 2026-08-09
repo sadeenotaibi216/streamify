@@ -2,11 +2,6 @@ import Button from "./Buttons";
 
 function Hero({ theme }) {
   return (
-    //  className={`min-h-screen transition-colors ${
-    //   theme === "dark"
-    //     ? "bg-black text-white"
-    //     : "bg-slate-100 text-black"
-    // }`}
     <div
       className={`min-h-[55vh] flex flex-col items-center justify-between gap-8 px-6 py-10 md:flex-row md:px-16 ${
         theme === "dark" ? "bg-black text-white" : "bg-white text-black"

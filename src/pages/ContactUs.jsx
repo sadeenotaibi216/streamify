@@ -71,7 +71,6 @@ function ContactUs({ theme }) {
     };
   }
 
-  // Validates the entire form when Send is clicked
   function validateForm(data) {
     try {
       contactSchema.validateSync(getFormData(data), {
@@ -96,7 +95,6 @@ function ContactUs({ theme }) {
     }
   }
 
-  // Validates only the field that was changed
   function validateField(field, data) {
     try {
       contactSchema.validateSyncAt(field, getFormData(data));
@@ -121,7 +119,6 @@ function ContactUs({ theme }) {
 
     setForm(updatedForm);
 
-    // The checkbox values are converted into one genres array
     if (field === "action" || field === "comedy" || field === "drama") {
       validateField("genres", updatedForm);
     } else {
