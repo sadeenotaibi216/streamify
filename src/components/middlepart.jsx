@@ -1,25 +1,12 @@
-function FeatureItem({
-  imgSrc,
-  imgAlt,
-  title,
-  description,
-}) {
+function FeatureItem({ imgSrc, imgAlt, title, description }) {
   return (
     <div className="flex w-full items-center gap-3 sm:w-[45%] lg:w-[22%]">
-      <img
-        src={imgSrc}
-        alt={imgAlt}
-        className="h-14 w-14 md:h-20 md:w-20"
-      />
+      <img src={imgSrc} alt={imgAlt} className="h-14 w-14 md:h-20 md:w-20" />
 
       <div>
-        <p className="text-base font-semibold md:text-xl">
-          {title}
-        </p>
+        <p className="text-base font-semibold md:text-xl">{title}</p>
 
-        <p className="text-sm opacity-70 md:text-base">
-          {description}
-        </p>
+        <p className="text-sm opacity-70 md:text-base">{description}</p>
       </div>
     </div>
   );
@@ -29,9 +16,7 @@ function MiddlePart({ theme }) {
   return (
     <div
       className={`py-10 ${
-        theme === "dark"
-          ? "bg-[#020710] text-white"
-          : "bg-white text-black"
+        theme === "dark" ? "bg-[#020710] text-white" : "bg-white text-black"
       }`}
     >
       <h1 className="mb-8 text-center text-3xl font-bold md:text-4xl">

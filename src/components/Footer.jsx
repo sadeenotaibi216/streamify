@@ -5,11 +5,11 @@ function FooterLink({ children }) {
 
 function Footer() {
   return (
-    <div className="text-white mt-5 px-6 md:px-16 py-8">
+    <div className=" text-gray-400  mt-5 px-6 md:px-16 py-8">
       <div className="flex flex-col md:flex-row justify-between gap-10">
         <div>
           <div className="flex items-center gap-2">
-            <img src="/logo.png" alt="Streamify-logo" className="w-10 h-10" />
+            <img src="/logo.png" alt="Streamify-logo" className="w-15 h-10" />
             <span className="text-2xl font-semibold font-sans">Streamify</span>
           </div>
 

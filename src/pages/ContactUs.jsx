@@ -322,10 +322,11 @@ function ContactUs({ theme }) {
 
           <button
             type="submit"
+            disabled={!isFormValid}
             className={
               isFormValid
-                ? "cursor-pointer rounded-lg bg-green-400 py-3 font-bold text-black transition-colors duration-300 hover:bg-green-500"
-                : "cursor-pointer rounded-lg bg-gray-500 py-3 font-bold text-black"
+                ? "cursor-pointer rounded-lg bg-green-400 p-3 font-semibold text-black hover:bg-green-300"
+                : "cursor-not-allowed rounded-lg bg-gray-500 p-3 font-semibold text-black"
             }
           >
             Send

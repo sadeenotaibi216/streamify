@@ -2,10 +2,7 @@ import FAQ from "../components/Faq";
 import Hero from "../components/Hero";
 import MiddlePart from "../components/MiddlePart";
 import Plan from "../components/Plan";
-// import NewPost from "./NewPost";
-{
-  /* <NewPost theme={theme} /> */
-}
+
 function HomePage(props) {
   const { user, theme, language } = props;
 

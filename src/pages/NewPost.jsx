@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import getMovies from "../components/getMovies";
 import MovieCard from "../components/MovieCard";
+import axios from "axios";
 // import Button from "../components/Buttons";
 
 function NewPost({ theme }) {
@@ -56,7 +57,7 @@ function NewPost({ theme }) {
           return [...previousMovies, ...result.results];
         });
       } catch (error) {
-        if (error.name !== "AbortError") {
+        if (axios.isCancel(error)) {
           console.error(error.message);
         }
       } finally {
@@ -115,7 +116,7 @@ function NewPost({ theme }) {
               : "cursor-pointer bg-green-400 text-black hover:bg-green-300"
           }`}
         >
-          ←
+          <span className="-mt-0.5 ml-0.5">←</span>
         </button>
 
         <div className="grid min-w-0 flex-1 grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 xl:gap-5">
@@ -138,7 +139,7 @@ function NewPost({ theme }) {
               : "cursor-pointer bg-green-400 text-black hover:bg-green-300"
           }`}
         >
-          →
+          <span className="-mt-0.5 mr-0.5">→</span>
         </button>
       </div>
     </div>

@@ -4,6 +4,9 @@ const API_URL = import.meta.env.VITE_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 async function getMovies(page, signal) {
+  if (!API_URL || !API_KEY) {
+    throw new Error("API URL or API key is missing.");
+  }
   const response = await axios.get(API_URL, {
     params: {
       include_adult: false,
@@ -18,7 +21,7 @@ async function getMovies(page, signal) {
       accept: "application/json",
     },
 
-    signal: signal,
+    signal,
   });
 
   return response.data;

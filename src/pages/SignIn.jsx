@@ -177,6 +177,7 @@ function SignIn({ onSignIn, theme }) {
 
           <button
             type="submit"
+            disabled={!isFormValid}
             className={
               isFormValid
                 ? "cursor-pointer rounded-lg bg-green-400 p-3 font-semibold text-black hover:bg-green-300"

@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import myListReducer from "./MyListSlice";
 import {
   persistStore,
   persistReducer,
@@ -11,14 +12,16 @@ import {
 } from "redux-persist";
 
 import themeReducer from "./ThemeSlice";
-// 1. FIXED: Imported your language reducer (adjust path if needed)
+
 import languageReducer from "./LanguageSlice"; 
 import storage from "redux-persist/es/storage";
 
-// 2. Combined both reducers under one single root
+
+
 const rootReducer = combineReducers({
   theme: themeReducer,
-  language: languageReducer, 
+  language: languageReducer,
+  myList: myListReducer,
 });
 
 const persistConfig = {
@@ -27,11 +30,11 @@ const persistConfig = {
   storage,
 };
 
-// 3. This now handles persistence for BOTH theme and language together
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
-  // 4. FIXED: Passed the unified persisted reducer here
+
   reducer: persistedReducer, 
 
   middleware: function (getDefaultMiddleware) {

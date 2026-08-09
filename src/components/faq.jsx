@@ -1,24 +1,39 @@
 import { useState } from "react";
-import Button from "./Buttons";
-
+import { useSelector } from "react-redux";
 function FAQItem({ question, answer }) {
   const [open, setOpen] = useState(false);
 
+  function toggleFAQ() {
+    setOpen((previousOpen) => !previousOpen);
+  }
+  const theme = useSelector((state) => state.theme.theme);
   return (
-    <div className="bg-[#0B1220] text-white rounded-xl px-4 md:px-6 py-4">
-      <div className="flex justify-between items-center gap-4">
-        <p className="text-sm md:text-lg font-semibold">{question}</p>
+    <div
+      onClick={toggleFAQ}
+      className={`cursor-pointer rounded-xl border-2 px-4 py-4 transition md:px-6 ${
+        theme === "light"
+          ? "border-gray-300 bg-white text-black shadow-md hover:bg-gray-100"
+          : "border-green-400 bg-[#172033] text-white hover:bg-[#1E293B]"
+      }`}
+    >
+      <div className="flex items-center justify-between gap-4">
+        <p className="text-sm font-semibold md:text-lg">{question}</p>
 
-        <Button
-          onClick={() => setOpen(!open)}
-          className="text-2xl md:text-3xl px-2 py-0 flex-shrink-0"
-        >
-          {open ? "-" : "+"}
-        </Button>
+        <span className="shrink-0 text-2xl font-bold text-green-400 md:text-3xl">
+          {open ? "−" : "+"}
+        </span>
       </div>
 
       {open && (
-        <p className="mt-3 text-gray-400 text-sm md:text-base">{answer}</p>
+        <p
+          className={`mt-3 border-t pt-3 text-sm md:text-base ${
+            theme === "light"
+              ? "border-gray-300 text-gray-600"
+              : "border-gray-600 text-gray-300"
+          }`}
+        >
+          {answer}
+        </p>
       )}
     </div>
   );
@@ -48,17 +63,21 @@ function FAQ() {
   ];
 
   return (
-    <div className="mt-5 md:mt-10 w-full max-w-3xl md:max-w-5xl mx-auto px-4">
-      <h1 className="text-white text-2xl md:text-4xl font-bold text-center mb-3 md:mb-6">
+    <section className="mx-auto mt-5 w-full max-w-3xl px-4 md:mt-10 md:max-w-5xl">
+      <h1 className="mb-3 text-center text-2xl font-bold text-white md:mb-6 md:text-4xl">
         Frequently Asked Questions
       </h1>
 
       <div className="space-y-3">
-        {questions.map((item, index) => (
-          <FAQItem key={index} question={item.question} answer={item.answer} />
+        {questions.map((item) => (
+          <FAQItem
+            key={item.question}
+            question={item.question}
+            answer={item.answer}
+          />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
