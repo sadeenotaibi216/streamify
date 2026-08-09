@@ -110,7 +110,10 @@ function App() {
             }
           />
 
-          <Route path="/search" element={<Placeholder title="Search Page" />} />
+          <Route
+            path="/search"
+            element={<Placeholder title="Search Page" theme={theme} />}
+          />
 
           <Route
             path="/free-trial"
