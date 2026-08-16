@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-function FAQItem({ question, answer }) {
+
+function FAQItem(
+  { question, answer }: { question: string; answer: string }
+) {
   const [open, setOpen] = useState(false);
 
   function toggleFAQ() {
     setOpen((previousOpen) => !previousOpen);
   }
-  const theme = useSelector((state) => state.theme.theme);
+
+  const theme = useSelector(
+    (state: { theme: { theme: string } }) => state.theme.theme
+  );
+
   return (
     <div
       onClick={toggleFAQ}

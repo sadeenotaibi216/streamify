@@ -1,5 +1,9 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+
 import myListReducer from "./MyListSlice";
+import themeReducer from "./ThemeSlice";
+import languageReducer from "./ LanguageSlice";
+
 import {
   persistStore,
   persistReducer,
@@ -11,12 +15,7 @@ import {
   REGISTER,
 } from "redux-persist";
 
-import themeReducer from "./ThemeSlice";
-
-import languageReducer from "./LanguageSlice"; 
 import storage from "redux-persist/es/storage";
-
-
 
 const rootReducer = combineReducers({
   theme: themeReducer,
@@ -30,17 +29,25 @@ const persistConfig = {
   storage,
 };
 
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(
+  persistConfig,
+  rootReducer
+);
 
 const store = configureStore({
-
-  reducer: persistedReducer, 
+  reducer: persistedReducer,
 
   middleware: function (getDefaultMiddleware) {
     return getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        ignoredActions: [
+          FLUSH,
+          REHYDRATE,
+          PAUSE,
+          PERSIST,
+          PURGE,
+          REGISTER,
+        ],
       },
     });
   },

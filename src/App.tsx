@@ -3,31 +3,41 @@ import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "./store/ThemeSlice";
-import { toggleLanguage } from "./store/languageSlice";
+import { toggleLanguage } from "./store/ LanguageSlice";
+
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
 import ContactUs from "./pages/ContactUs";
-import Placeholder from "./pages/Placeholder";
+import Placeholder from "./pages/PlaceHolder";
 import SignIn from "./pages/SignIn";
 import Movies from "./pages/Movies";
 import MyList from "./pages/MyList";
+
 function App() {
-  // const [user, setUser] = useState(localStorage.getItem("user"));
-  const [user, setUser] = useState(() => {
+  const [user, setUser] = useState<{
+    username: string;
+    email: string;
+  } | null>(() => {
     const savedUser = localStorage.getItem("user");
+
     return savedUser ? JSON.parse(savedUser) : null;
   });
-  // const [theme, setTheme] = useState(localStorage.getItem("theme"));
 
-  const theme = useSelector((state) => {
-    return state.theme.theme;
-  });
-  // const [language, setLanguage] = useState(localStorage.getItem("language"));
-  const language = useSelector((state) => {
-    return state.language.language;
-  });
+  const theme = useSelector(
+    (state: { theme: { theme: "light" | "dark" } }) => {
+      return state.theme.theme;
+    }
+  );
+
+  const language = useSelector(
+    (state: { language: { language: "en" | "ar" } }) => {
+      return state.language.language;
+    }
+  );
+
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (user && user.username) {
       localStorage.setItem("user", JSON.stringify(user));
@@ -36,31 +46,24 @@ function App() {
 
   useEffect(() => {
     if (theme === "dark") {
-      // localStorage.setItem("theme", "dark");
       document.documentElement.classList.add("dark");
     } else {
-      // localStorage.setItem("theme", "light");
       document.documentElement.classList.remove("dark");
     }
   }, [theme]);
 
   useEffect(() => {
-    // localStorage.setItem("language", language);
-
     document.documentElement.lang = language;
     document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
   }, [language]);
 
   console.log(user);
+
   function handleSignOut() {
     setUser(null);
     localStorage.removeItem("user");
   }
 
-  // function toggleTheme() {
-  //   // setTheme((previousTheme) => (previousTheme === "dark" ? "light" : "dark"));
-  //   // setTheme(theme === "dark" ? "light" : "dark");
-  // }
   function handleToggleTheme() {
     dispatch(toggleTheme());
   }
@@ -84,40 +87,78 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<HomePage user={user} language={language} theme={theme} />}
+            element={
+              <HomePage
+                user={user}
+                language={language}
+                theme={theme}
+              />
+            }
           />
 
           <Route
             path="/tv-shows"
-            element={<Placeholder title="TV Shows Page" theme={theme} />}
+            element={
+              <Placeholder
+                title="TV Shows Page"
+                theme={theme}
+              />
+            }
           />
 
-          <Route path="/Movies" element={<Movies theme={theme} />} />
+          <Route
+            path="/Movies"
+            element={<Movies theme={theme} />}
+          />
 
           <Route
             path="/kids"
-            element={<Placeholder title="Kids Page" theme={theme} />}
+            element={
+              <Placeholder
+                title="Kids Page"
+                theme={theme}
+              />
+            }
           />
 
-          <Route path="/my-list" element={<MyList theme={theme} />} />
+          <Route
+            path="/my-list"
+            element={<MyList theme={theme} />}
+          />
 
-          <Route path="/contact" element={<ContactUs theme={theme} />} />
+          <Route
+            path="/contact"
+            element={<ContactUs theme={theme} />}
+          />
 
           <Route
             path="/signin"
             element={
-              <SignIn onSignIn={setUser} language={language} theme={theme} />
+              <SignIn
+                onSignIn={setUser}
+                theme={theme}
+              />
             }
           />
 
           <Route
             path="/search"
-            element={<Placeholder title="Search Page" theme={theme} />}
+            element={
+              <Placeholder
+                title="Search Page"
+                theme={theme}
+              />
+            }
           />
 
           <Route
             path="/free-trial"
-            element={<Placeholder title="Free Trial Page" />}
+            element={
+              <Placeholder
+                title="Free Trial Page"
+                theme={theme}
+              />
+            }
           />
         </Routes>
       </main>
@@ -126,4 +167,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
