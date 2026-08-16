@@ -1,9 +1,16 @@
-import FAQ from "../components/Faq";
-import Hero from "../components/Hero";
-import MiddlePart from "../components/MiddlePart";
-import Plan from "../components/Plan";
 
-function HomePage(props) {
+import Hero from "../components/Hero";
+
+import FAQ from "../components/faq";
+import MiddlePart from "../components/middlepart";
+import Plan from "../components/plan";
+function HomePage(
+  props: {
+    user: { username: string } | null;
+    theme: "light" | "dark";
+    language: "en" | "ar";
+  }
+) {
   const { user, theme, language } = props;
 
   return (
@@ -19,14 +26,16 @@ function HomePage(props) {
             : `مرحباً ${user.username}!`}
         </div>
       )}
+
       <Hero theme={theme} />
 
       {/* <NewPost theme={theme} /> */}
+
       <MiddlePart theme={theme} />
 
       <Plan theme={theme} />
 
-      <FAQ theme={theme} />
+      <FAQ />
     </main>
   );
 }

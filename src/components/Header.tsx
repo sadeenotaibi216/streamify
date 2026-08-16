@@ -1,13 +1,22 @@
 import { NavLink } from "react-router";
 
-function Header({
-  user,
-  theme,
-  language,
-  onSignOut,
-  onToggleTheme,
-  onToggleLanguage,
-}) {
+function Header(
+  {
+    user,
+    theme,
+    language,
+    onSignOut,
+    onToggleTheme,
+    onToggleLanguage,
+  }: {
+    user: { username: string } | null;
+    theme: "light" | "dark";
+    language: "en" | "ar";
+    onSignOut: () => void;
+    onToggleTheme: () => void;
+    onToggleLanguage: () => void;
+  }
+) {
   const navButtons =
     language === "en"
       ? [

@@ -1,4 +1,16 @@
-function FeatureItem({ imgSrc, imgAlt, title, description }) {
+function FeatureItem(
+  {
+    imgSrc,
+    imgAlt,
+    title,
+    description,
+  }: {
+    imgSrc: string;
+    imgAlt: string;
+    title: string;
+    description: string;
+  }
+) {
   return (
     <div className="flex w-full items-center gap-3 sm:w-[45%] lg:w-[22%]">
       <img src={imgSrc} alt={imgAlt} className="h-14 w-14 md:h-20 md:w-20" />
@@ -12,7 +24,7 @@ function FeatureItem({ imgSrc, imgAlt, title, description }) {
   );
 }
 
-function MiddlePart({ theme }) {
+function MiddlePart({ theme }: { theme: "light" | "dark" }) {
   return (
     <div
       className={`py-10 ${

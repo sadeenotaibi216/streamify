@@ -1,6 +1,6 @@
-import Button from "./Buttons";
+import Button from "./Buttons.js";
 
-function Hero({ theme }) {
+function Hero({ theme }: { theme: "light" | "dark" }) {
   return (
     <div
       className={`min-h-[55vh] flex flex-col items-center justify-between gap-8 px-6 py-10 md:flex-row md:px-16 ${

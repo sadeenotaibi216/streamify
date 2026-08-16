@@ -1,19 +1,34 @@
-import Button from "./Buttons";
+import Button from "./Buttons.js";
 import { useSelector } from "react-redux";
-function Card({
-  title,
-  monthlyPrice,
-  yearlyPrice,
-  features,
-  buttonText,
-  popularm,
-  populary,
-  userPlan,
-}) {
+
+function Card(
+  {
+    title,
+    monthlyPrice,
+    yearlyPrice,
+    features,
+    buttonText,
+    popularm,
+    populary,
+    userPlan,
+  }: {
+    title: string;
+    monthlyPrice: string;
+    yearlyPrice: string;
+    features: string[];
+    buttonText: string;
+    popularm: boolean;
+    populary: boolean;
+    userPlan: string;
+  }
+) {
   const price = userPlan === "monthly" ? monthlyPrice : yearlyPrice;
 
   const popular = userPlan === "monthly" ? popularm : populary;
-  const theme = useSelector((state) => state.theme.theme);
+
+  const theme = useSelector(
+    (state: { theme: { theme: string } }) => state.theme.theme
+  );
 
   return (
     <div
@@ -59,7 +74,7 @@ function Card({
   );
 }
 
-function Cards({ userPlan, theme }) {
+function Cards({ userPlan }: { userPlan: string }) {
   return (
     <>
       <div className="flex flex-wrap gap-6 justify-center mt-10 px-4">
@@ -68,11 +83,14 @@ function Cards({ userPlan, theme }) {
           monthlyPrice="5.99"
           yearlyPrice="50"
           userPlan={userPlan}
-          features={["Watch on 1 device", "HD quality", "Download on 1 device"]}
+          features={[
+            "Watch on 1 device",
+            "HD quality",
+            "Download on 1 device",
+          ]}
           buttonText="Choose Basic"
           popularm={false}
           populary={true}
-          theme={theme}
         />
 
         <Card
@@ -89,7 +107,6 @@ function Cards({ userPlan, theme }) {
           buttonText="Choose Standard"
           popularm={true}
           populary={false}
-          theme={theme}
         />
 
         <Card
@@ -105,7 +122,6 @@ function Cards({ userPlan, theme }) {
           buttonText="Choose Premium"
           popularm={false}
           populary={false}
-          theme={theme}
         />
       </div>
     </>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Cards from "./Cards";
 import Button from "./Buttons";
 
-function Plan({ theme }) {
+function Plan({ theme }: { theme: "light" | "dark" }) {
   const [userPlan, setUserPlan] = useState("monthly");
 
   return (
@@ -49,7 +49,7 @@ function Plan({ theme }) {
         </Button>
       </div>
 
-      <Cards userPlan={userPlan} theme={theme} />
+      <Cards userPlan={userPlan} />
     </>
   );
 }

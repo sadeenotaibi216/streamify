@@ -1,4 +1,4 @@
-import Button from "./Buttons";
+import Button from "./Buttons.js";
 function email() {
   return (
     <div className="max-w-6xl mx-auto mt-10 bg-gradient-to-r from-[#0B1220] to-green-950 rounded-2xl p-6 flex justify-between items-center">

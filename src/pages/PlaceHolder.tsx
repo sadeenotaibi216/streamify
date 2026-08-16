@@ -1,4 +1,9 @@
-function Placeholder({ title, theme }) {
+function Placeholder(
+  { title, theme }: {
+    title: string;
+    theme: "light" | "dark";
+  }
+) {
   return (
     <div className="flex min-h-[500px] items-center justify-center">
       <h1

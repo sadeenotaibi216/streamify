@@ -26,7 +26,7 @@ const contactSchema = yup.object({
   acceptTerms: yup.boolean().oneOf([true], "You must accept the terms"),
 });
 
-function ContactUs({ theme }) {
+function ContactUs({ theme }: { theme: "light" | "dark" }) {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -40,10 +40,23 @@ function ContactUs({ theme }) {
     acceptTerms: false,
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<{
+    name?: string;
+    email?: string;
+    subject?: string;
+    message?: string;
+    genres?: string;
+    acceptTerms?: string;
+  }>({});
 
-  function getGenres(data) {
-    const genres = [];
+  function getGenres(
+    data: {
+      action: boolean;
+      comedy: boolean;
+      drama: boolean;
+    }
+  ) {
+    const genres: string[] = [];
 
     if (data.action) {
       genres.push("Action");
@@ -60,7 +73,18 @@ function ContactUs({ theme }) {
     return genres;
   }
 
-  function getFormData(data) {
+  function getFormData(
+    data: {
+      name: string;
+      email: string;
+      subject: string;
+      message: string;
+      action: boolean;
+      comedy: boolean;
+      drama: boolean;
+      acceptTerms: boolean;
+    }
+  ) {
     return {
       name: data.name,
       email: data.email,
@@ -71,7 +95,18 @@ function ContactUs({ theme }) {
     };
   }
 
-  function validateForm(data) {
+  function validateForm(
+    data: {
+      name: string;
+      email: string;
+      subject: string;
+      message: string;
+      action: boolean;
+      comedy: boolean;
+      drama: boolean;
+      acceptTerms: boolean;
+    }
+  ) {
     try {
       contactSchema.validateSync(getFormData(data), {
         abortEarly: false,
@@ -79,12 +114,10 @@ function ContactUs({ theme }) {
 
       setErrors({});
       return true;
-    } catch (error) {
-      const newErrors = {};
+    } catch (error: any) {
+      const newErrors: any = {};
 
-      error.inner.forEach((currentError) => {
-        // Keep the first error for each field.
-        // This makes "required" appear before other errors.
+      error.inner.forEach((currentError: any) => {
         if (!newErrors[currentError.path]) {
           newErrors[currentError.path] = currentError.message;
         }
@@ -95,7 +128,19 @@ function ContactUs({ theme }) {
     }
   }
 
-  function validateField(field, data) {
+  function validateField(
+    field: string,
+    data: {
+      name: string;
+      email: string;
+      subject: string;
+      message: string;
+      action: boolean;
+      comedy: boolean;
+      drama: boolean;
+      acceptTerms: boolean;
+    }
+  ) {
     try {
       contactSchema.validateSyncAt(field, getFormData(data));
 
@@ -103,7 +148,7 @@ function ContactUs({ theme }) {
         ...previousErrors,
         [field]: "",
       }));
-    } catch (error) {
+    } catch (error: any) {
       setErrors((previousErrors) => ({
         ...previousErrors,
         [field]: error.message,
@@ -111,7 +156,18 @@ function ContactUs({ theme }) {
     }
   }
 
-  function handleChange(field, value) {
+  function handleChange(
+    field:
+      | "name"
+      | "email"
+      | "subject"
+      | "message"
+      | "action"
+      | "comedy"
+      | "drama"
+      | "acceptTerms",
+    value: string | boolean
+  ) {
     const updatedForm = {
       ...form,
       [field]: value,
@@ -128,7 +184,7 @@ function ContactUs({ theme }) {
 
   const isFormValid = contactSchema.isValidSync(getFormData(form));
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const valid = validateForm(form);
@@ -152,11 +208,13 @@ function ContactUs({ theme }) {
 
     setErrors({});
   }
+
   const inputStyle = `w-full rounded-lg border px-4 py-3 outline-none transition-colors duration-300 focus:border-green-400 ${
     theme === "dark"
       ? "border-gray-600 bg-black text-white placeholder:text-gray-400"
       : "border-gray-300 bg-white text-black placeholder:text-gray-500"
   }`;
+
   return (
     <div
       className={`flex min-h-screen items-center justify-center px-6 py-20 transition-colors duration-300 ${
@@ -266,7 +324,6 @@ function ContactUs({ theme }) {
                   handleChange("action", event.target.checked)
                 }
               />
-
               <span className="ml-2">Action</span>
             </label>
 
@@ -278,7 +335,6 @@ function ContactUs({ theme }) {
                   handleChange("comedy", event.target.checked)
                 }
               />
-
               <span className="ml-2">Comedy</span>
             </label>
 
@@ -290,7 +346,6 @@ function ContactUs({ theme }) {
                   handleChange("drama", event.target.checked)
                 }
               />
-
               <span className="ml-2">Drama</span>
             </label>
 
@@ -308,12 +363,13 @@ function ContactUs({ theme }) {
                   handleChange("acceptTerms", event.target.checked)
                 }
               />
-
               <span className="ml-2">I accept the terms</span>
             </label>
 
             {errors.acceptTerms && (
-              <p className="mt-1 text-sm text-red-400">{errors.acceptTerms}</p>
+              <p className="mt-1 text-sm text-red-400">
+                {errors.acceptTerms}
+              </p>
             )}
           </div>
 

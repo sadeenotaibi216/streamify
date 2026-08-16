@@ -1,14 +1,27 @@
 import { useDispatch } from "react-redux";
-import { addToMyList } from "../store/mylistslice";
+import { addToMyList } from "../store/MyListSlice";
 
-function MovieCard({ movie, theme, showAddButton = true }) {
+function MovieCard(
+  {
+    movie,
+    theme,
+    showAddButton = true,
+  }: {
+    movie: {
+      poster_path: string;
+      title: string;
+    };
+    theme: "light" | "dark";
+    showAddButton?: boolean;
+  }
+) {
   const dispatch = useDispatch();
 
   return (
     <div
       className={`flex h-[490px] w-full flex-col overflow-hidden rounded-xl shadow-md
-      transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl
-      ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+        transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl
+        ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}
     >
       <img
         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
