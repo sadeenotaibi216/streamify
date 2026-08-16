@@ -1,5 +1,5 @@
 import Button from "./Buttons";
-
+import { useSelector } from "react-redux";
 function Card({
   title,
   monthlyPrice,
@@ -13,9 +13,16 @@ function Card({
   const price = userPlan === "monthly" ? monthlyPrice : yearlyPrice;
 
   const popular = userPlan === "monthly" ? popularm : populary;
+  const theme = useSelector((state) => state.theme.theme);
 
   return (
-    <div className="relative flex flex-col bg-[#0B1220] text-white rounded-2xl p-4 md:p-6 w-full sm:w-72 border">
+    <div
+      className={`relative flex min-h-[310px] flex-col rounded-xl border p-5 md:p-6 ${
+        theme === "light"
+          ? "border-gray-300 bg-white text-black shadow-md"
+          : "border-gray-400 bg-[#0b1220] text-white"
+      }`}
+    >
       {popular && (
         <p className="border-green-400 absolute top-0 left-0 w-full bg-green-400 text-black text-center rounded-t-2xl py-1 text-sm font-bold">
           Most-Popular
@@ -38,10 +45,12 @@ function Card({
       </ul>
 
       <Button
-        className={`mt-auto rounded py-2 w-full font-semibold transition ${
+        className={`mt-auto w-full rounded py-2 font-semibold transition ${
           popular
             ? "bg-green-400 text-black hover:bg-green-300"
-            : "border border-green-400 text-white hover:bg-green-400 hover:text-black"
+            : theme === "light"
+              ? "border-2 border-green-400 text-black hover:bg-green-400 hover:text-black"
+              : "border-2 border-green-400 text-white hover:bg-green-400 hover:text-black"
         }`}
       >
         {buttonText}
@@ -50,7 +59,7 @@ function Card({
   );
 }
 
-function Cards({ userPlan }) {
+function Cards({ userPlan, theme }) {
   return (
     <>
       <div className="flex flex-wrap gap-6 justify-center mt-10 px-4">
@@ -63,6 +72,7 @@ function Cards({ userPlan }) {
           buttonText="Choose Basic"
           popularm={false}
           populary={true}
+          theme={theme}
         />
 
         <Card
@@ -79,6 +89,7 @@ function Cards({ userPlan }) {
           buttonText="Choose Standard"
           popularm={true}
           populary={false}
+          theme={theme}
         />
 
         <Card
@@ -94,12 +105,8 @@ function Cards({ userPlan }) {
           buttonText="Choose Premium"
           popularm={false}
           populary={false}
+          theme={theme}
         />
-      </div>
-
-      <div className="flex gap-2 text-white font-sans justify-center mt-5 items-center px-4 text-center">
-        <img src="/logo.png" alt="Streamify-logo" className="w-10 h-10" />
-        <p>Secure Payments . Cancel Anytime</p>
       </div>
     </>
   );

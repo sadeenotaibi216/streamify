@@ -1,7 +1,13 @@
-function Placeholder({ title }) {
+function Placeholder({ title, theme }) {
   return (
-    <div className="min-h-screen flex items-center justify-center text-4xl font-bold text-white">
-      {title}
+    <div className="flex min-h-[500px] items-center justify-center">
+      <h1
+        className={`text-3xl font-bold ${
+          theme === "light" ? "text-black" : "text-white"
+        }`}
+      >
+        {title}
+      </h1>
     </div>
   );
 }

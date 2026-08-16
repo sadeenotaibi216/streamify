@@ -1,20 +1,12 @@
 import Button from "./Buttons";
 
-function Hero({theme}) {
+function Hero({ theme }) {
   return (
-
-      //  className={`min-h-screen transition-colors ${
-      //   theme === "dark"
-      //     ? "bg-black text-white"
-      //     : "bg-slate-100 text-black"
-      // }`}
-  <div
-  className={`min-h-[55vh] flex flex-col items-center justify-between gap-8 px-6 py-10 md:flex-row md:px-16 ${
-    theme === "dark"
-      ? "bg-black text-white"
-      : "bg-white text-black"
-  }`}
->
+    <div
+      className={`min-h-[55vh] flex flex-col items-center justify-between gap-8 px-6 py-10 md:flex-row md:px-16 ${
+        theme === "dark" ? "bg-black text-white" : "bg-white text-black"
+      }`}
+    >
       <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left">
         <h1 className="text-4xl md:text-5xl font-sans font-bold  pt-2 pb-2">
           Unlimited Stories. <br />
@@ -32,7 +24,7 @@ function Hero({theme}) {
             Start Free Trial
           </Button>
 
-          <Button className="border border-green-400 px-4 md:px-8 py-3 md:py-4 text-sm md:text-lg rounded-lg font-semibold hover:bg-green-400 hover:text-black">
+          <Button className="border-2 border-green-400 px-4 py-3 text-sm font-semibold rounded-lg hover:bg-green-400 hover:text-black md:px-8 md:py-4 md:text-lg">
             Watch Trailer
           </Button>
         </div>
@@ -41,7 +33,7 @@ function Hero({theme}) {
           <img
             src="/green.png"
             alt="green logo"
-            className="w-4 h-4 md:w-6 md:h-6"
+            className="w-16 h-8 md:w-22 md:h-16"
           />
           <p className="text-sm font-sans">
             Cancel anytime. First 7 days free.

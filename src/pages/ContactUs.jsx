@@ -26,7 +26,7 @@ const contactSchema = yup.object({
   acceptTerms: yup.boolean().oneOf([true], "You must accept the terms"),
 });
 
-function ContactUs() {
+function ContactUs({ theme }) {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -71,7 +71,6 @@ function ContactUs() {
     };
   }
 
-  // Validates the entire form when Send is clicked
   function validateForm(data) {
     try {
       contactSchema.validateSync(getFormData(data), {
@@ -96,7 +95,6 @@ function ContactUs() {
     }
   }
 
-  // Validates only the field that was changed
   function validateField(field, data) {
     try {
       contactSchema.validateSyncAt(field, getFormData(data));
@@ -121,7 +119,6 @@ function ContactUs() {
 
     setForm(updatedForm);
 
-    // The checkbox values are converted into one genres array
     if (field === "action" || field === "comedy" || field === "drama") {
       validateField("genres", updatedForm);
     } else {
@@ -155,13 +152,31 @@ function ContactUs() {
 
     setErrors({});
   }
-
+  const inputStyle = `w-full rounded-lg border px-4 py-3 outline-none transition-colors duration-300 focus:border-green-400 ${
+    theme === "dark"
+      ? "border-gray-600 bg-black text-white placeholder:text-gray-400"
+      : "border-gray-300 bg-white text-black placeholder:text-gray-500"
+  }`;
   return (
-    <div className="min-h-screen bg-black text-white flex justify-center items-center px-6 py-20">
-      <div className="bg-[#0B1220] w-full max-w-xl rounded-2xl p-8 border border-gray-700">
-        <h1 className="text-4xl font-bold text-center mb-4">Contact Us</h1>
+    <div
+      className={`flex min-h-screen items-center justify-center px-6 py-20 transition-colors duration-300 ${
+        theme === "dark" ? "bg-black text-white" : "bg-white text-black"
+      }`}
+    >
+      <div
+        className={`w-full max-w-xl rounded-2xl border p-8 transition-colors duration-300 ${
+          theme === "dark"
+            ? "border-gray-700 bg-[#0B1220] text-white"
+            : "border-gray-300 bg-white text-black shadow-lg"
+        }`}
+      >
+        <h1 className="mb-4 text-center text-4xl font-bold">Contact Us</h1>
 
-        <p className="text-gray-400 text-center mb-8">
+        <p
+          className={`mb-8 text-center ${
+            theme === "dark" ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
           Have a question? Send us a message.
         </p>
 
@@ -175,12 +190,12 @@ function ContactUs() {
               type="text"
               placeholder="Full Name"
               value={form.name}
-              onChange={(e) => handleChange("name", e.target.value)}
-              className="w-full bg-black border border-gray-600 rounded-lg px-4 py-3 outline-none focus:border-green-400"
+              onChange={(event) => handleChange("name", event.target.value)}
+              className={inputStyle}
             />
 
             {errors.name && (
-              <p className="text-red-400 text-sm mt-1">{errors.name}</p>
+              <p className="mt-1 text-sm text-red-400">{errors.name}</p>
             )}
           </div>
 
@@ -189,20 +204,20 @@ function ContactUs() {
               type="email"
               placeholder="Email"
               value={form.email}
-              onChange={(e) => handleChange("email", e.target.value)}
-              className="w-full bg-black border border-gray-600 rounded-lg px-4 py-3 outline-none focus:border-green-400"
+              onChange={(event) => handleChange("email", event.target.value)}
+              className={inputStyle}
             />
 
             {errors.email && (
-              <p className="text-red-400 text-sm mt-1">{errors.email}</p>
+              <p className="mt-1 text-sm text-red-400">{errors.email}</p>
             )}
           </div>
 
           <div>
             <select
               value={form.subject}
-              onChange={(e) => handleChange("subject", e.target.value)}
-              className="w-full bg-black border border-gray-600 rounded-lg px-4 py-3 outline-none focus:border-green-400"
+              onChange={(event) => handleChange("subject", event.target.value)}
+              className={inputStyle}
             >
               <option value="">Select Subject</option>
               <option value="Question">Question</option>
@@ -211,7 +226,7 @@ function ContactUs() {
             </select>
 
             {errors.subject && (
-              <p className="text-red-400 text-sm mt-1">{errors.subject}</p>
+              <p className="mt-1 text-sm text-red-400">{errors.subject}</p>
             )}
           </div>
 
@@ -219,60 +234,68 @@ function ContactUs() {
             <textarea
               placeholder="Message"
               value={form.message}
-              onChange={(e) => handleChange("message", e.target.value)}
-              className="w-full bg-black border border-gray-600 rounded-lg px-4 py-3 h-32 outline-none focus:border-green-400"
+              onChange={(event) => handleChange("message", event.target.value)}
+              className={`${inputStyle} h-32`}
             />
 
             <p
-              className={
+              className={`text-right text-sm ${
                 form.message.length > 40
-                  ? "text-red-400 text-sm text-right"
-                  : "text-gray-400 text-sm text-right"
-              }
+                  ? "text-red-400"
+                  : theme === "dark"
+                    ? "text-gray-400"
+                    : "text-gray-600"
+              }`}
             >
               {form.message.length}/40
             </p>
 
             {errors.message && (
-              <p className="text-red-400 text-sm mt-1">{errors.message}</p>
+              <p className="mt-1 text-sm text-red-400">{errors.message}</p>
             )}
           </div>
 
           <div>
-            <p className="font-semibold mb-2">Interested Genres</p>
+            <p className="mb-2 font-semibold">Interested Genres</p>
 
-            <label className="block mb-2">
+            <label className="mb-2 block">
               <input
                 type="checkbox"
                 checked={form.action}
-                onChange={(e) => handleChange("action", e.target.checked)}
+                onChange={(event) =>
+                  handleChange("action", event.target.checked)
+                }
               />
 
               <span className="ml-2">Action</span>
             </label>
 
-            <label className="block mb-2">
+            <label className="mb-2 block">
               <input
                 type="checkbox"
                 checked={form.comedy}
-                onChange={(e) => handleChange("comedy", e.target.checked)}
+                onChange={(event) =>
+                  handleChange("comedy", event.target.checked)
+                }
               />
 
               <span className="ml-2">Comedy</span>
             </label>
 
-            <label className="block mb-2">
+            <label className="mb-2 block">
               <input
                 type="checkbox"
                 checked={form.drama}
-                onChange={(e) => handleChange("drama", e.target.checked)}
+                onChange={(event) =>
+                  handleChange("drama", event.target.checked)
+                }
               />
 
               <span className="ml-2">Drama</span>
             </label>
 
             {errors.genres && (
-              <p className="text-red-400 text-sm mt-1">{errors.genres}</p>
+              <p className="mt-1 text-sm text-red-400">{errors.genres}</p>
             )}
           </div>
 
@@ -281,23 +304,26 @@ function ContactUs() {
               <input
                 type="checkbox"
                 checked={form.acceptTerms}
-                onChange={(e) => handleChange("acceptTerms", e.target.checked)}
+                onChange={(event) =>
+                  handleChange("acceptTerms", event.target.checked)
+                }
               />
 
               <span className="ml-2">I accept the terms</span>
             </label>
 
             {errors.acceptTerms && (
-              <p className="text-red-400 text-sm mt-1">{errors.acceptTerms}</p>
+              <p className="mt-1 text-sm text-red-400">{errors.acceptTerms}</p>
             )}
           </div>
 
           <button
             type="submit"
+            disabled={!isFormValid}
             className={
               isFormValid
-                ? "bg-green-400 text-black font-bold py-3 rounded-lg hover:bg-green-500 cursor-pointer"
-                : "bg-gray-500 text-black font-bold py-3 rounded-lg cursor-pointer"
+                ? "cursor-pointer rounded-lg bg-green-400 p-3 font-semibold text-black hover:bg-green-300"
+                : "cursor-not-allowed rounded-lg bg-gray-500 p-3 font-semibold text-black"
             }
           >
             Send
@@ -306,7 +332,11 @@ function ContactUs() {
           <button
             type="button"
             onClick={() => navigate("/")}
-            className="border border-gray-600 py-3 rounded-lg hover:border-white"
+            className={`cursor-pointer rounded-lg border py-3 transition-colors duration-300 ${
+              theme === "dark"
+                ? "border-gray-600 hover:border-white"
+                : "border-gray-300 hover:border-black"
+            }`}
           >
             Back to Home
           </button>

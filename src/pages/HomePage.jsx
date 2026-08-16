@@ -9,9 +9,7 @@ function HomePage(props) {
   return (
     <main
       className={`min-h-screen transition-colors ${
-        theme === "dark"
-          ? "bg-black text-white"
-          : "bg-white text-black"
+        theme === "dark" ? "bg-black text-white" : "bg-white text-black"
       }`}
     >
       {user?.username && (
@@ -21,9 +19,9 @@ function HomePage(props) {
             : `مرحباً ${user.username}!`}
         </div>
       )}
-
       <Hero theme={theme} />
 
+      {/* <NewPost theme={theme} /> */}
       <MiddlePart theme={theme} />
 
       <Plan theme={theme} />
