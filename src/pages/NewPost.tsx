@@ -4,8 +4,12 @@ import MovieCard from "../components/MovieCard";
 import axios from "axios";
 // import Button from "../components/Buttons";
 
-function NewPost({ theme }) {
-  const [movies, setMovies] = useState([]);
+function NewPost({ theme }:    {theme: "light" | "dark";}) {
+const [movies, setMovies] = useState<{
+  id: number;
+  title: string;
+  poster_path: string;
+}[]>([]);
   const [startIndex, setStartIndex] = useState(0);
   const [page, setPage] = useState(1);
   const [moviesPerPage, setMoviesPerPage] = useState(6);

@@ -30,7 +30,15 @@ const existingUser = {
   password: "Sadeen123",
 };
 
-function SignIn({ onSignIn, theme }) {
+function SignIn(
+  {
+    theme,
+    onSignIn,
+  }: {
+    theme: "light" | "dark";
+    onSignIn: (user: { username: string; email: string }) => void;
+  }
+) {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -39,7 +47,12 @@ function SignIn({ onSignIn, theme }) {
     password: "",
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<{
+    username?: string;
+    email?: string;
+    password?: string;
+  }>({});
+
   const [loginError, setLoginError] = useState("");
 
   function validateForm() {
@@ -50,10 +63,10 @@ function SignIn({ onSignIn, theme }) {
 
       setErrors({});
       return true;
-    } catch (error) {
-      const newErrors = {};
+    } catch (error: any) {
+      const newErrors: any = {};
 
-      error.inner.forEach((currentError) => {
+      error.inner.forEach((currentError: any) => {
         if (!newErrors[currentError.path]) {
           newErrors[currentError.path] = currentError.message;
         }
@@ -64,7 +77,10 @@ function SignIn({ onSignIn, theme }) {
     }
   }
 
-  function handleChange(field, value) {
+  function handleChange(
+    field: "username" | "email" | "password",
+    value: string
+  ) {
     setForm({
       ...form,
       [field]: value,
@@ -73,7 +89,7 @@ function SignIn({ onSignIn, theme }) {
     setLoginError("");
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const valid = validateForm();
@@ -99,6 +115,7 @@ function SignIn({ onSignIn, theme }) {
 
     navigate("/");
   }
+
   const isFormValid = userinfo.isValidSync(form);
 
   const inputStyle = `w-full rounded-lg border p-3 outline-none transition-colors duration-300 ${
@@ -130,7 +147,9 @@ function SignIn({ onSignIn, theme }) {
               type="text"
               placeholder="User Name"
               value={form.username}
-              onChange={(event) => handleChange("username", event.target.value)}
+              onChange={(event) =>
+                handleChange("username", event.target.value)
+              }
               className={inputStyle}
             />
 
@@ -146,7 +165,9 @@ function SignIn({ onSignIn, theme }) {
               type="email"
               placeholder="Email"
               value={form.email}
-              onChange={(event) => handleChange("email", event.target.value)}
+              onChange={(event) =>
+                handleChange("email", event.target.value)
+              }
               className={inputStyle}
             />
 
@@ -162,7 +183,9 @@ function SignIn({ onSignIn, theme }) {
               type="password"
               placeholder="Password"
               value={form.password}
-              onChange={(event) => handleChange("password", event.target.value)}
+              onChange={(event) =>
+                handleChange("password", event.target.value)
+              }
               className={inputStyle}
             />
 

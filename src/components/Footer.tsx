@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-function FooterLink({ children }) {
+function FooterLink({ children }:{  children: string;}) {
   return <p className="text-gray-400 mb-2 text-sm md:text-base">{children}</p>;
 }
 
